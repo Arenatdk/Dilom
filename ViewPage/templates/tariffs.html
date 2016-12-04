@@ -18,13 +18,18 @@
                     <th>Коментарий</th>
                     <th style="width: 40px">Видимый</th>
                 </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td>Update software</td>
-                    <td>Чтото</td>
-                    <td><span class="badge bg-red">No</span></td>
-                </tr>
+                {% for tarif in tarif_list %}
+                    <tr>
+
+                        <td>{{ tarif.id }}</td>
+                        <td>{{ tarif.name }}</td>
+                        <td>{{ tarif.type }}</td>
+                        <td>{{ tarif.coment }}</td>
+                        <td>{{ tarif.enable }}</td>
+
+
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
