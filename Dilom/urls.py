@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from ViewPage.views import index_page
+from ViewPage.views import tarif_page
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index_page, name='home')
+    url(r'^$', index_page, name='home'),
+    url(r'^tariff/', tarif_page, name='tariff')
+
 ]
