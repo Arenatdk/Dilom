@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Выгнать бомжа?</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="chart-responsive">
+                                <canvas id="pieChart" style="height: 255px; width: 511px;" height="255" width="511"></canvas>
+                            </div>
+                            <!-- ./chart-responsive -->
+                        </div>
+                        <!-- /.col -->
+
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+
+        </div>
+        <!-- /.col (LEFT) -->
+        <div class="col-md-6">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Что Вы делаете, когда нервничаете?</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="chart-responsive">
+                                <canvas id="pieChart2" style="height: 255px; width: 511px;" height="255" width="511"></canvas>
+                            </div>
+                            <!-- ./chart-responsive -->
+                        </div>
+                        <!-- /.col -->
+
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+        </div>
+        <!-- /.box -->
+
+    </div>
+
+
+
+    <script src="{% static 'plugins/chartjs/Chart.min.js'%}"></script>
+    <!-- /.col (RIGHT) -->
+    {% verbatim %}
+    <script type="text/javascript">
+        var ctx = document.getElementById("pieChart");
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    "За",
+                    "Против",
+                    "Не голосовали"
+                ],
+                datasets: [
+                    {
+                        data: [300, 500,50],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#00c0ef"
+                        ],
+                        hoverBackgroundColor: [
+                            "#FF6384",
+                            "#00c0ef"
+                        ]
+                    }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+
+
+
+
+
+
+        var myChart1 = new Chart(document.getElementById("pieChart2"), {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    "Ем сладкое",
+                    "Грызу ногти",
+                    "Курю",
+                    "Употребляю алкоголь",
+                    "Ничего не делаю"
+                ],
+                datasets: [
+                    {
+                        data: [300, 500,100,1000,150],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#fcff2a",
+                            "#1b29ff",
+                            "#16fff2",
+                            "#00c0ef"
+                        ]
+                    }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+    {% endverbatim %}
+{% endblock %}

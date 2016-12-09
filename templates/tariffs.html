@@ -9,7 +9,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered nth-2-center">
                 <tbody>
                 <tr>
                     <th style="width: 10px">#</th>
@@ -23,9 +23,14 @@
 
                         <td>{{ tarif.id }}</td>
                         <td>{{ tarif.name }}</td>
-                        <td>{{ tarif.type }}</td>
+                        <td>{{ tarif.type.type_name}}</td>
                         <td>{{ tarif.coment }}</td>
-                        <td>{{ tarif.enable }}</td>
+                        <td>{% if tarif.enable %}
+                            <a href="#" data-skin="skin-green" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open" ></span></a>
+                        {% else %}
+                            <a href="#" data-skin="skin-red" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-close" ></span></a>
+                        {% endif %}
+                        </td>
 
 
                     </tr>
@@ -34,7 +39,9 @@
             </table>
         </div>
         <!-- /.box-body -->
+
         <div class="box-footer clearfix">
+            <a href="{% url "tariff_add" %}" class="btn btn-primary"> Добавить</a>
             <ul class="pagination pagination-sm no-margin pull-right">
                 <li><a href="#">«</a></li>
                 <li><a href="#">1</a></li>

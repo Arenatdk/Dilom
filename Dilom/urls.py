@@ -15,11 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from ViewPage.views import index_page
-from ViewPage.views import tarif_page
+from Auth.views import *
+from ViewPage.views import *
+from Vote.views import *
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index_page, name='home'),
-    url(r'^tariff/', tarif_page, name='tariff')
+    url(r'^$', login, name='login'),
+    url(r'^register/$', register, name='register'),
+    url(r'^logout/$', logout, name='logout'),
+    url(r'^account/$', index_page, name='home'),
+    url(r'^vote/$', vote, name='vote'),
+    url(r'^tariff/', tarif_page, name='tariff'),
+    url(r'^tariff_add/', add_taritt, name='tariff_add')
 
 ]
