@@ -29,40 +29,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{% url 'login' %}"><b>ОСМД</b> учет</a>
+        <a href="{% url 'login' %}"><b>Учет</b> ОСМД</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Вход</p>
-        {% if form.errors %}
-            <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
-        {% endif %}
-        <form action="{% url 'login' %}" method="post">{% csrf_token %}
-            <div class="form-group has-feedback">
-                <input type="text" name="username" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
-                </div>
-                <!-- /.col -->
-            </div>
-        </form>
-
-
-        <!-- /.social-auth-links -->
-
-        <a href="#">Забыли пароль?</a><br>
-        <a href="{% url 'register' %}" class="text-center">Регистрация</a>
-        <a href="{% url 'register' %}" class="text-center">Регистрация ОСМД</a>
-
+        {% block context %}{% endblock %}
     </div>
     <!-- /.login-box-body -->
 </div>

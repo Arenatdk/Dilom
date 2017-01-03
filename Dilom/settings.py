@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ViewPage',
     'Auth',
+    'apartments',
 ]
 
 MIDDLEWARE = [
@@ -76,13 +77,17 @@ WSGI_APPLICATION = 'Dilom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'diplom_db',
+        'USER': 'denis',
+        'PASSWORD': 'pass',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -105,7 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-
+ALLOWED_HOSTS = [
+    '192.168.1.206',  # Allow domain and subdomains
+    '127.0.0.1',  # Allow domain and subdomains
+    '.localhost.',  # Also allow FQDN and subdomains
+]
 
 
 LANGUAGE_CODE = 'ru-ua'

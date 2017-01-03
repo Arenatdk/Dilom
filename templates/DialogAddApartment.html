@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+    {% if formName == 'AddPodezd' %}
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">AddPodezd</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">Label</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <form action="{% url 'DialogAddApartment' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="FormName" value="AddPodezd">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ PodezdForm.numder.id_for_label }}">Номер подъезда</label>
+                                {{ PodezdForm.numder }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ PodezdForm.note.id_for_label }}">Коментарий</label>
+                                {{ PodezdForm.note }}
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button id="AddPodezdButton" class="btn btn-sm btn-primary btn-flat pull-right" type="submit">
+                        Отправить
+                    </button>
+                </div><!-- box-footer -->
+            </form>
+        </div><!-- /.box -->
+
+
+
+
+
+    {% elif formName == 'AddLevel' %}
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">AddLevel</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">Label</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <form action="{% url 'DialogAddApartment' %}" method="post">
+                {% csrf_token %}
+                {{ LevelForm.PodezdID }}
+                <input type="hidden" name="FormName" value="AddLevel">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ LevelForm.count_level.id_for_label }}">Количество этажей</label>
+                                {{ LevelForm.count_level }}
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button id="AddPodezdButton" class="btn btn-sm btn-primary btn-flat pull-right" type="submit">
+                        Отправить
+                    </button>
+                </div><!-- box-footer -->
+            </form>
+        </div><!-- /.box -->
+
+
+
+
+    {% elif formName == 'AddApartment' %}
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">AddApartment</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">Label</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <form action="{% url 'DialogAddApartment' %}" method="post">
+                {% csrf_token %}
+                {{ LevelForm.PodezdID }}
+                <input type="hidden" name="FormName" value="AddApartment">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                        <label for="StartNumber" >Начальный номер</label>
+                                                        <input type="number" class="form-control" name="StartNumber"
+                                                               placeholder="Начальный номер">
+                                                    </div>
+                        </div>
+                        <div class="col-md-4">
+                                            {% for level in levelList %}
+                                                    <div class="form-group">
+                                                        <label for="Level{{ level.id }}" >{{ level.level_number }} этаж</label>
+                                                        <input type="number" class="form-control" name="Level{{ level.id }}"
+                                                               placeholder="Количество квартир на {{ level.level_number }} этаже">
+                                                    </div>
+                                            {% endfor %}
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button id="AddPodezdButton" class="btn btn-sm btn-primary btn-flat pull-right" type="submit">
+                        Отправить
+                    </button>
+                </div><!-- box-footer -->
+            </form>
+        </div><!-- /.box -->
+    {% endif %}
+
+{% endblock %}

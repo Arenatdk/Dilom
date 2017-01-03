@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="box box-primary" xmlns="http://www.w3.org/1999/html">
+
+        <div class="box-body">
+            <!-- Split button -->
+
+            <div class="margin">
+                <div class="row no-print">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-primary btn-lg"
+                                data-toggle="modal"
+                                data-target="#AddPodezd">
+                            <i class="fa fa-plus"></i> Добавить подъезд
+                        </button>
+                        <button type="button" class="btn btn-primary btn-lg"
+                                data-toggle="modal"
+                                data-target="#AddLevelmodal">
+                            <i class="fa fa-plus"></i> Добавить этаж
+                        </button>
+                        <button type="button" class="btn btn-primary btn-lg"
+                                data-toggle="modal"
+                                data-target="#AddApartament">
+                            <i class="fa fa-plus"></i> Добавить квартиру
+                        </button>
+                    <a class="btn btn-primary btn-lg" href="{% url 'DialogAddApartment' %}" role="button"><i class="fa fa-plus"></i> Добавить</a>
+                        <!--Добавление подъезда-->
+                        <div id="AddPodezd" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" type="button" data-dismiss="modal">×</button>
+                                        <h4 class="modal-title">Добавление подъезда</h4>
+                                    </div>
+                                    <form action="/AddPodezd/" method="post">
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            {{ PodezdForm }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="AddPodezdButton" class="btn btn-default" type="submit">
+                                                Отправить
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Добавление этажей-->
+                        <div id="AddLevelmodal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" type="button" data-dismiss="modal">×</button>
+                                        <h4 class="modal-title">Добавление этажа</h4>
+                                    </div>
+                                    <form action="/AddLevel/" method="post">
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            <label for="PodezdNameAddLevel">Подъезд</label>
+                                            <select class="form-control" name="PodezdNameAddLevel">
+                                                {% for x in podezd %}
+                                                    <option value="{{ x.id }}"> {{ x.numder }}</option>
+
+                                                {% endfor %}
+                                            </select>
+
+                                            <div class="form-group">
+                                                <label for="LevelNumberInput">Количество этажей</label>
+                                                <input class="form-control" name="LevelNumberInput" maxlength="10"
+                                                       type="number" required="">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="AddLevelButton" class="btn btn-default" type="submit">
+                                                Отправить
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Добавление домов-->
+
+                        <div id="AddApartament" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Modal title</h4>
+                                    </div>
+                                    <form>
+                                        <div class="modal-body">
+                                            {% for level in levelList %}
+                                                {% if level.podezd_id == 5 %}
+                                                    <div class="form-group">
+                                                        <label for="countLevel{{ level.level_number }}" >{{ level.level_number }} этаж</label>
+                                                        <input type="email" class="form-control" name="countLevel{{ level.level_number }}"
+                                                               placeholder="Количество квартир на {{ level.level_number }} этаже">
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-default">Submit</button>
+                                        </div>
+                                    </form>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- flat split buttons -->
+
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    {% for podezd in PodezdList %}
+
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Подъезд № {{ podezd.numder }}</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">Label</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">Этажи</th>
+                        <th class="col-md-10">Дома</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    {% for level in levelList %}
+                        {% if level.podezd_id == podezd.id %}
+                            <tr>
+                                <th>{{ level.level_number }}</th>
+                                <th>
+                                    {% for ap in ApartmentList %}
+                                        {% if ap.level_id == level.id %}
+
+                                            <a href="{% url 'editapartament' ap.id %}"> <span
+                                                    class="label label-primary">{{ ap.numeber }}</span></a>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </th>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                The footer of the box
+            </div><!-- box-footer -->
+        </div><!-- /.box -->
+
+    {% endfor %}
+
+
+
+{% endblock %}
