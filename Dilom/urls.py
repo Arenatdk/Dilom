@@ -37,5 +37,6 @@ urlpatterns = [
     url(r'^AddPodezd/$', AddPodezdPOST, name='AddPodezdPOST'),
     url(r'^AddLevel/$', AddLevelPOST, name='AddLevelPOST'),
     url(r'^DialogAddApartment/$', DialogAddApartment, name='DialogAddApartment'),
+    url(r'^apartment/addUser/$', ApartamentAddUser, name='apartamentAddUser'),
     url(r'^apartment/(?P<pk>\d+)/edit/$', editApartament, name='editapartament')
 ]

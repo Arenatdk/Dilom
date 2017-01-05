@@ -13,64 +13,336 @@
         <form class="form-horizontal  " action="/tariff_add/" method="post">
             {% csrf_token %}
 
-                <div class="box-body">
-                    <div class="form-group">
-                        <label for="{{ form.name.id_for_label }}" class="col-sm-2 control-label">Название</label>
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-2 control-label">Название</label>
 
-                        <div class="col-sm-10">
-                            {{ form.name }}
+                    <div class="col-sm-10">
+                        {{ form.name }}
 
-                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="123" class="col-sm-2 control-label">Тариф</label>
+                </div>
+                <div class="form-group">
+                    <label for="123" class="col-sm-2 control-label">Тариф</label>
 
-                        <div class="col-sm-10">
-                            {{ form.fariff_type }}
+                    <div class="col-sm-10">
+                        {{ form.fariff_type }}
 
-                        </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="inputEmail332" class="col-sm-2 control-label">Еденица измерения</label>
+                <div class="form-group">
+                    <label for="typeSubTariff" class="col-sm-2 control-label">Подтип</label>
+                    <div class="col-sm-10">
+                        <select id="typeSubTariff" class="form-control">
+                            <option>Без поргов</option>
+                            <option>С 1 порогом</option>
+                            <option>С 2 порогоми</option>
+                            <option>С 1 общим порогом</option>
+                            <option>С 2 общими порогоми</option>
+                        </select>
 
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail332" placeholder="Еденица измерения">
-                        </div>
                     </div>
+                </div>
 
+                <div class="form-group">
+                    <label for="price" class="col-sm-2 control-label">Еденица измерения</label>
 
-                    <div class="form-group">
-                        <label for="inputEmail332" class="col-sm-2 control-label">Цена за единицу</label>
-
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail332" placeholder="Цена за единицу">
-                        </div>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="price" placeholder="Еденица измерения">
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3323" class="col-sm-2 control-label">1 порог</label>
+                </div>
 
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail3323" placeholder="Цена за единицу">
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="inputEmail33234" class="col-sm-2 control-label">2 порог</label>
-
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail33234" placeholder="Цена за единицу">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail332343" class="col-sm-2 control-label">Комментарий</label>
-
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail332343" placeholder="Комментарий">
+                <div class="form-group">
+                    <label for="pricefor1" class="col-sm-2 control-label">Цена за единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="pricefor1" placeholder="Цена за единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %"></div>
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="inputEmail3323" class="col-sm-2 control-label">1 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputEmail3323" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pricefor2" class="col-sm-2 control-label">Цена за единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="pricefor2" placeholder="Цена за единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3323" class="col-sm-2 control-label">2 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputEmail3323" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pricefor2" class="col-sm-2 control-label">Цена за единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="pricefor2" placeholder="Цена за единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="sum" class="col-sm-2 control-label">Сумма</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="sum" placeholder="Сумма">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T1price" class="col-sm-2 control-label">Т1, Цена за 1 единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="T1price"
+                                       placeholder="Т1, Цена за 1 единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T2price" class="col-sm-2 control-label">Т2, Цена за 1 единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="T2price"
+                                       placeholder="Т2, Цена за 1 единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T1porog1" class="col-sm-2 control-label">T1, 1 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="T1porog1" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T2porog1" class="col-sm-2 control-label">T2, 1 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="T1porog1" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Tporog1" class="col-sm-2 control-label">1 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Tporog1" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T1price" class="col-sm-2 control-label">Т1, Цена за 1 единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="T1price"
+                                       placeholder="Т1, Цена за 1 единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T2price" class="col-sm-2 control-label">Т2, Цена за 1 единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="T2price"
+                                       placeholder="Т2, Цена за 1 единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T1porog1" class="col-sm-2 control-label">T1, 2 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="T1porog1" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T2porog2" class="col-sm-2 control-label">T2, 2 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="T1porog2" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Tporog2" class="col-sm-2 control-label">2 порог</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Tporog2" placeholder="Порог">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T1price" class="col-sm-2 control-label">Т1, Цена за 1 единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="T1price"
+                                       placeholder="Т1, Цена за 1 единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T2price" class="col-sm-2 control-label">Т2, Цена за 1 единицу</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="T2price"
+                                       placeholder="Т2, Цена за 1 единицу">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">Льгота:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
+                                                         placeholder=" %">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label for="coment" class="col-sm-2 control-label">Комментарий</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="coment" placeholder="Комментарий">
+                    </div>
+                </div>
+            </div>
+
 
 
             <!-- /.box-body -->

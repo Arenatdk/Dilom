@@ -4,8 +4,103 @@
 
 
 {% block content %}
-<h1>{{ pk }}</h1>
+    <h1>{{ pk }}</h1>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Данные о владельце</h3>
+            <div class="box-tools pull-right">
+
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+
+
+                {% if owner == '' %}
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            <i
+                                    class="fa fa-plus"></i> Добавить владельца
+                        </button>
+                    </div>
+                    <div class="col-md-4"></div>
+                {% else %}
+                    <div class="col-md-4">Фамилия:<h3> {{ owner.LastName }}</h3></div>
+                    <div class="col-md-4">Имя:<h3> {{ owner.FirstName }}</h3></div>
+                    <div class="col-md-4">Отчество:<h3> {{ owner.patronymic }}</h3></div>
+                {% endif %}
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            The footer of the box
+        </div><!-- box-footer -->
+    </div><!-- /.box -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="{% url 'apartamentAddUser' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" value="{{ pk }}" name="apartID">
+                            <label for="{{ addUserApartment.number.id_for_label }}"
+                                   class="col-sm-2 control-label">Номер</label>
+                            <div class="col-sm-10">
+                                {{ addUserApartment.number }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ addUserApartment.FirstName.id_for_label }}" class="col-sm-2 control-label">Имя</label>
+                            <div class="col-sm-10">
+                                {{ addUserApartment.FirstName }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ addUserApartment.LastName.id_for_label }}" class="col-sm-2 control-label">Фамилия</label>
+                            <div class="col-sm-10">
+                                {{ addUserApartment.LastName }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ addUserApartment.patronymic.id_for_label }}" class="col-sm-2 control-label">Отчество</label>
+                            <div class="col-sm-10">
+                                {{ addUserApartment.patronymic }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 
+    <script src="{% static 'plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'jquery.maskedinput.min.js' %}"></script>
+    <!-- iCheck -->
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#id_number").mask("+38 (999) 999-99-99");
+        });
+    </script>
 {% endblock %}

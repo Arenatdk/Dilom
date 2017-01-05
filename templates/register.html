@@ -38,7 +38,7 @@
         <form action="/register/" method="post">
             {% csrf_token %}
             <div class="form-group has-feedback {% if errors.username %}has-error{% endif %}">
-                <label class="control-label" for="id_username">{{  errors.username }}</label>
+                <label class="control-label" for="id_username">{{ errors.username }}</label>
                 {{ form.username }}
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
@@ -70,22 +70,36 @@
                 {{ form.number }}
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
             </div>
-            <div class="form-group has-feedback">
-                {{ form.OSBBname }}
-                <span class="glyphicon glyphicon-home form-control-feedback"></span>
+            <div class="form-group">
+
+                <div class="checkbox">
+                    <label>
+                        <input id="myCheckBox" name="myCheckBox"  type="checkbox"> Зарегистрироваться как ОСМД
+                    </label>
+
+                </div>
             </div>
-            <div class="form-group has-feedback">
-                {{ form.addres }}
-                <span class="glyphicon glyphicon-home form-control-feedback"></span>
+            <div id="OSMDdiv" style="display: none">
+                <div class="form-group has-feedback">
+                    {{ form.OSBBname }}
+                    <span class="glyphicon glyphicon-home form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.addres }}
+                    <span class="glyphicon glyphicon-home form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.street }}
+                    <span class="glyphicon glyphicon-home form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.homenumber }}
+                    <span class="glyphicon glyphicon-home form-control-feedback"></span>
+                </div>
+
             </div>
-            <div class="form-group has-feedback">
-                {{ form.street }}
-                <span class="glyphicon glyphicon-home form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                {{ form.homenumber }}
-                <span class="glyphicon glyphicon-home form-control-feedback"></span>
-            </div>
+
+
             <div class="row">
                 <div class="col-xs-8">
 
@@ -95,7 +109,7 @@
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
                 </div>
                 <!-- /.col -->
-            </div>
+
         </form>
 
 
@@ -108,24 +122,38 @@
 <!-- jQuery 2.2.3 -->
 <script src="{% static 'plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'jquery.maskedinput.min.js' %}"></script>
 <!-- iCheck -->
 <script src="{% static 'plugins/iCheck/icheck.min.js' %}"></script>
 <script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-    });
-</script>
 
-<script type="text/javascript">
-jQuery(function($){
-   $("#id_number").mask("+38 (999) 999-99-99");
+</script>
+<script>
+
+    $("#myCheckBox").change(function() {
+    if(this.checked) {
+        $("#OSMDdiv").show();
+         $("#id_OSBBname").prop('required',true);
+         $("#id_addres").prop('required',true);
+         $("#id_street").prop('required',true);
+         $("#id_homenumber").prop('required',true);
+    }
+    else
+    {
+         $("#OSMDdiv").hide();
+         $("#id_OSBBname").prop('required',false);
+         $("#id_addres").prop('required',false);
+         $("#id_street").prop('required',false);
+         $("#id_homenumber").prop('required',false);
+    }
+
 });
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#id_number").mask("+38 (999) 999-99-99");
+    });
 </script>
 </body>
 </html>
