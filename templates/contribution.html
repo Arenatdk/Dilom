@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+    <div class="form-group">
+        <label>Месяц:</label>
+
+        <div class="input-group date">
+            <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control pull-right" id="datepicker" value="{{ month }}-{{ year }} ">
+        </div>
+        <!-- /.input group -->
+    </div>
+
+    <link rel="stylesheet" href="{% static 'plugins/datepicker/datepicker3.css' %}">
+    <script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'plugins/datepicker/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'plugins/datepicker/locales/bootstrap-datepicker.ru.js' %}"></script>
+
+
+    <script>
+        $('#datepicker').datepicker({
+            format: "mm-yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            language: 'ru',
+            autoclose: true
+        });
+        $('#datepicker').change(function() {
+            window.location.href = "/contribution/"+$('#datepicker').val();
+        });
+
+    </script>
+
+    {% for tarif in tarif_list %}
+
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ tarif.name }}</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">{{ tarif.coment }}</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+
+                    <tr>
+                        <th>Номер дома</th>
+                        <th>Владелец</th>
+                        <th>Показания</th>
+                        <th>Израсходовано</th>
+                        <th>Расчет стоймости</th>
+                        <th>Сумма</th>
+                    </tr>
+
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Номер дома</th>
+                        <th>Владелец</th>
+                        <th>Показания</th>
+                        <th>Израсходовано</th>
+                        <th>Расчет стоймости</th>
+                        <th>Сумма</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for u in ut %}
+                        {% if u.tarif_id == tarif.id  %}
+                        <tr>
+                            <td>{{ u.apartment.numeber}}</td>
+                            <td>{{ u.apartment.userprofile.FirstName }} {{ u.apartment.userprofile.LastName }}</td>
+                            <td>{{ u.current_raadings|floatformat }}<br>{{ u.current_raadings_c2|floatformat }}</td>
+                             <td>{{ u.cur|floatformat }}<br>{{ u.cur_c2|floatformat}}</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                The footer of the box
+            </div><!-- box-footer -->
+        </div><!-- /.box -->
+
+
+
+    {% endfor %}
+
+
+
+
+    asdasdasdasd
+{% endblock %}

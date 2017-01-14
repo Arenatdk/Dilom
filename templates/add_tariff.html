@@ -31,40 +31,40 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="SubType">
                     <label for="typeSubTariff" class="col-sm-2 control-label">Подтип</label>
                     <div class="col-sm-10">
-                        <select id="typeSubTariff" class="form-control">
-                            <option>Без поргов</option>
-                            <option>С 1 порогом</option>
-                            <option>С 2 порогоми</option>
-                            <option>С 1 общим порогом</option>
-                            <option>С 2 общими порогоми</option>
+                        <select id="typeSubTariff" onchange="f()" class="form-control" name="typeSubTariff">
+                            <option value="1">Без поргов</option>
+                            <option value="2">С 1 порогом</option>
+                            <option value="3">С 2 порогоми</option>
+                            <option value="4">С 1 общим порогом</option>
+                            <option value="5">С 2 общими порогоми</option>
                         </select>
 
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="edenicaIzmereniya">
                     <label for="price" class="col-sm-2 control-label">Еденица измерения</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="price" placeholder="Еденица измерения">
+                        {{ form.price }}
                     </div>
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group" id="cenaZaedinicu">
                     <label for="pricefor1" class="col-sm-2 control-label">Цена за единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="pricefor1" placeholder="Цена за единицу">
+                                {{ form.pricefor1 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.pricefor1CB }}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -73,25 +73,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputEmail3323" class="col-sm-2 control-label">1 порог</label>
+                <div class="form-group" id="porogperviy">
+                    <label for="porog1" class="col-sm-2 control-label">1 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3323" placeholder="Порог">
+                        {{ form.porog1 }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="cenaZaedenicu2">
                     <label for="pricefor2" class="col-sm-2 control-label">Цена за единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="pricefor2" placeholder="Цена за единицу">
+                                {{ form.pricefor2 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.pricefor2CB }}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -102,25 +102,25 @@
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group" id="vtoroyPorog">
                     <label for="inputEmail3323" class="col-sm-2 control-label">2 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3323" placeholder="Порог">
+                        {{ form.porog2 }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="cenazaedinicu1">
                     <label for="pricefor2" class="col-sm-2 control-label">Цена за единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="pricefor2" placeholder="Цена за единицу">
+                                {{ form.pricefor3 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.pricefor3CB }}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -131,12 +131,12 @@
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group" id="summaPrice">
                     <label for="sum" class="col-sm-2 control-label">Сумма</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="sum" placeholder="Сумма">
+                                {{ form.sum }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
@@ -151,18 +151,17 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t1cena">
                     <label for="T1price" class="col-sm-2 control-label">Т1, Цена за 1 единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="T1price"
-                                       placeholder="Т1, Цена за 1 единицу">
+                               {{ form.T1price}}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                       {{ form.T1priceCB}}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -173,18 +172,17 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t2cena">
                     <label for="T2price" class="col-sm-2 control-label">Т2, Цена за 1 единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="T2price"
-                                       placeholder="Т2, Цена за 1 единицу">
+                                {{ form.T2price}}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.T2priceCB}}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -195,42 +193,42 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t1por1">
                     <label for="T1porog1" class="col-sm-2 control-label">T1, 1 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="T1porog1" placeholder="Порог">
+                        {{ form.T1Porog }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t2por1">
                     <label for="T2porog1" class="col-sm-2 control-label">T2, 1 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="T1porog1" placeholder="Порог">
+                        {{ form.T2Porog }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="tpor1">
                     <label for="Tporog1" class="col-sm-2 control-label">1 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Tporog1" placeholder="Порог">
+                        {{ form.ObshPorog }}
                     </div>
                 </div>
 
-                <div class="form-group">
+
+                <div class="form-group" id="t1pricezaEd">
                     <label for="T1price" class="col-sm-2 control-label">Т1, Цена за 1 единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="T1price"
-                                       placeholder="Т1, Цена за 1 единицу">
+                                {{ form.T1price1}}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.T1priceCB1}}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -241,18 +239,17 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t2pricezaEd">
                     <label for="T2price" class="col-sm-2 control-label">Т2, Цена за 1 единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="T2price"
-                                       placeholder="Т2, Цена за 1 единицу">
+                                {{ form.T2price1}}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.T2priceCB1}}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -263,42 +260,41 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t1por2">
                     <label for="T1porog1" class="col-sm-2 control-label">T1, 2 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="T1porog1" placeholder="Порог">
+                        {{ form.T1Porog1 }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t2por2">
                     <label for="T2porog2" class="col-sm-2 control-label">T2, 2 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="T1porog2" placeholder="Порог">
+                        {{ form.T2Porog1 }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="vtoroyPor">
                     <label for="Tporog2" class="col-sm-2 control-label">2 порог</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Tporog2" placeholder="Порог">
+                        {{ form.ObshPorog1 }}
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t1cenaZaed">
                     <label for="T1price" class="col-sm-2 control-label">Т1, Цена за 1 единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="T1price"
-                                       placeholder="Т1, Цена за 1 единицу">
+                                {{ form.T1price2 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.T1priceCB2 }}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -309,18 +305,17 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="t2cenaZaed">
                     <label for="T2price" class="col-sm-2 control-label">Т2, Цена за 1 единицу</label>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="T2price"
-                                       placeholder="Т2, Цена за 1 единицу">
+                                {{ form.T2price2 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.T2priceCB2 }}Льгота:
                                     </label>
                                 </div>
                             </div>
@@ -330,19 +325,16 @@
                         </div>
                     </div>
                 </div>
-
-
 
 
                 <div class="form-group">
                     <label for="coment" class="col-sm-2 control-label">Комментарий</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="coment" placeholder="Комментарий">
+                        {{ form.comment }}
                     </div>
                 </div>
             </div>
-
 
 
             <!-- /.box-body -->
@@ -353,7 +345,146 @@
             <!-- /.box-footer -->
         </form>
     </div>
+    <script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
+    <script>
+        $("#id_fariff_type")
+            .change(function () {
+                    $('#SubType').hide();
+                    $('#edenicaIzmereniya').hide();
+                    $('#cenaZaedinicu').hide();
+                    $('#cenaZaedenicu2').hide();
+                    $('#porogperviy').hide();
+                    $('#vtoroyPorog').hide();
+                    $('#cenazaedinicu1').hide();
+                    $('#summaPrice').hide();
+                    $('#t1cena').hide();
+                    $('#t2cena').hide();
+                    $('#t1por1').hide();
+                    $('#t2por1').hide();
+                    $('#tpor1').hide();
+                    $('#t1pricezaEd').hide();
+                    $('#t2pricezaEd').hide();
+                    $('#t1por2').hide();
+                    $('#t2por2').hide();
+                    $('#vtoroyPor').hide();
+                    $('#t1cenaZaed').hide();
+                    $('#t2cenaZaed').hide();
+                    $('#id_price').prop('required', false);
+                    $('#id_pricefor1').prop('required', false);
+                    $('#id_porog1').prop('required', false);
+                    $('#id_pricefor2').prop('required', false);
+                    $('#id_porog2').prop('required', false);
+                    $('#id_pricefor3').prop('required', false);
+                    $('#id_sum').prop('required', false);
 
+                    if (this.value == 1) {
+                        $('#edenicaIzmereniya').show();
+                        $('#cenaZaedinicu').show();
+                        $('#id_price').prop('required', true);
+                        $('#id_pricefor1').prop('required', true);
+
+                    } else if (this.value == 2) {
+                        $('#edenicaIzmereniya').show();
+                        $('#cenaZaedinicu').show();
+                        $('#porogperviy').show();
+                        $('#cenaZaedenicu2').show();
+                        $('#id_price').prop('required', true);
+                        $('#id_pricefor1').prop('required', true);
+                        $('#id_porog1').prop('required', true);
+                        $('#id_pricefor2').prop('required', true);
+                    } else if (this.value == 3) {
+                        $('#edenicaIzmereniya').show();
+                        $('#cenaZaedinicu').show();
+                        $('#porogperviy').show();
+                        $('#cenaZaedenicu2').show();
+                        $('#cenazaedinicu1').show();
+                        $('#vtoroyPorog').show();
+                        $('#id_price').prop('required', true);
+                        $('#id_pricefor1').prop('required', true);
+                        $('#id_porog1').prop('required', true);
+                        $('#id_pricefor2').prop('required', true);
+                        $('#id_porog2').prop('required', true);
+                        $('#id_pricefor3').prop('required', true);
+
+                    } else if (this.value == 4) {
+                        $('#edenicaIzmereniya').show();
+                        $('#cenaZaedinicu').show();
+                        $('#id_price').prop('required', true);
+                        $('#id_pricefor1').prop('required', true);
+                    } else if (this.value == 5) {
+                        $('#edenicaIzmereniya').show();
+                        $('#cenaZaedinicu').show();
+                        $('#id_price').prop('required', true);
+                        $('#id_pricefor1').prop('required', true);
+                    } else if (this.value == 6) {
+                    } else if (this.value == 7) {
+                        $('#summaPrice').show();
+                        $('#id_sum').prop('required', true);
+                    }
+                    else if (this.value == 8) {
+                        $('#edenicaIzmereniya').show();
+                        $('#summaPrice').show();
+                        $('#id_sum').prop('required', true);
+                        $('#id_price').prop('required', true);
+                    }
+                    else if (this.value == 9) {
+                        $('#SubType').show();
+                        $('#edenicaIzmereniya').show();
+                        $('#t1cena').show();
+                        $('#t2cena').show();
+                        $('#id_price').prop('required', true);
+
+
+
+
+                        f();
+
+                    }
+
+                }
+            )
+            .change();
+        function f() {
+            $('#t1por1').hide();
+            $('#t2por1').hide();
+            $('#t1pricezaEd').hide();
+            $('#t2pricezaEd').hide();
+            $('#t1por2').hide();
+            $('#t2por2').hide();
+            $('#t1cenaZaed').hide();
+            $('#t2cenaZaed').hide();
+            $('#tpor1').hide();
+            $('#vtoroyPor').hide();
+            if ($('#typeSubTariff').val() == '2') {
+                $('#t1por1').show();
+                $('#t2por1').show();
+                $('#t1pricezaEd').show();
+                $('#t2pricezaEd').show();
+            } else if ($('#typeSubTariff').val() == '3') {
+                $('#t1por1').show();
+                $('#t2por1').show();
+                $('#t1pricezaEd').show();
+                $('#t2pricezaEd').show();
+                $('#t1por2').show();
+                $('#t2por2').show();
+                $('#t1cenaZaed').show();
+                $('#t2cenaZaed').show();
+            } else if ($('#typeSubTariff').val() == '4') {
+                $('#tpor1').show();
+                $('#t1pricezaEd').show();
+                $('#t2pricezaEd').show();
+            } else if ($('#typeSubTariff').val() == '5') {
+                $('#tpor1').show();
+                $('#t1pricezaEd').show();
+                $('#t2pricezaEd').show();
+                $('#vtoroyPor').show();
+
+                $('#t1cenaZaed').show();
+                $('#t2cenaZaed').show();
+            }
+
+        }
+    </script>
 
 
 {% endblock %}

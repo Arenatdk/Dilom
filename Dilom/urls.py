@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from Auth.views import *
-from ViewPage.views import *
+from tariff.views import *
 from Vote.views import *
 from apartments.views import *
 
@@ -28,8 +28,13 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^account/$', index_page, name='home'),
     url(r'^vote/$', vote, name='vote'),
+
+
+
+
     url(r'^tariff/', tarif_page, name='tariff'),
     url(r'^tariff_add/', add_taritt, name='tariff_add'),
+    url(r'^contribution/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', contribution, name='contribution'),
 
 
     #apartament

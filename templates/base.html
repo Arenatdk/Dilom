@@ -124,7 +124,7 @@ desired effect
                     </a>
                     <ul class="treeview-menu">
                         <li {% if 'tariff/' in request.path %}class="active" {% endif %} ><a href="{% url 'tariff' %}">Перечень расходов</a></li>
-                        <li><a href="#">Начисление взносов</a></li>
+                        <li {% if 'contribution/' in request.path %}class="active" {% endif %} ><a href="/contribution/00-0000/">Начисление взносов</a></li>
                         <li><a href="#">Платежи</a></li>
                         <li><a href="#">Отчет квартир</a></li>
 

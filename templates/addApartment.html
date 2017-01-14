@@ -5,6 +5,52 @@
 
 {% block content %}
     <h1>{{ pk }}</h1>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Начисления</h3>
+            <div class="box-tools pull-right">
+                <!-- Buttons, labels, and many other things can be placed here! -->
+                <!-- Here is a label for example -->
+                <span class="label label-primary">Label</span>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <table class="table table-bordered nth-2-center">
+                <tbody>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Название</th>
+                    <th>Тип</th>
+                    <th>Коментарий</th>
+                    <th style="width: 40px">Видимый</th>
+                </tr>
+                {% for tarif in tariff %}
+                    <tr>
+
+                        <td>{{ tarif.id }}</td>
+                        <td>{{ tarif.name }}</td>
+                        <td>{{ tarif.type.type_name }}</td>
+                        <td>{{ tarif.coment }}</td>
+                        <td>{% if tarif.enable %}
+                            <a href="#" data-skin="skin-green" class="btn btn-success btn-xs"><span
+                                    class="glyphicon glyphicon-eye-open"></span></a>
+                        {% else %}
+                            <a href="#" data-skin="skin-red" class="btn btn-danger btn-xs"><span
+                                    class="glyphicon glyphicon-eye-close"></span></a>
+                        {% endif %}
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            The footer of the box
+        </div><!-- box-footer -->
+    </div><!-- /.box -->
+
 
     <div class="box">
         <div class="box-header with-border">
