@@ -30,22 +30,22 @@
             language: 'ru',
             autoclose: true
         });
-        $('#datepicker').change(function() {
-            window.location.href = "/contribution/"+$('#datepicker').val();
+        $('#datepicker').change(function () {
+            window.location.href = "/contribution/" + $('#datepicker').val();
         });
 
     </script>
-
-    {% for tarif in tarif_list %}
-
-
+    {% for t in tar %}
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">{{ tarif.name }}</h3>
+                <h3 class="box-title">{{ t.name }}</h3>
                 <div class="box-tools pull-right">
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
-                    <span class="label label-primary">{{ tarif.coment }}</span>
+                    <button type="button" class="btn  btn-primary btn-sm" value="{{ t.id }}" data-toggle="modal"
+                            data-target="#myModal">
+                        Начислить взнос
+                    </button>
                 </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
             <div class="box-body">
@@ -59,6 +59,7 @@
                         <th>Израсходовано</th>
                         <th>Расчет стоймости</th>
                         <th>Сумма</th>
+                        <th>Дата добавления</th>
                     </tr>
 
                     </thead>
@@ -70,20 +71,64 @@
                         <th>Израсходовано</th>
                         <th>Расчет стоймости</th>
                         <th>Сумма</th>
+                        <th>Дата добавления</th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    {% for u in ut %}
-                        {% if u.tarif_id == tarif.id  %}
-                        <tr>
-                            <td>{{ u.apartment.numeber}}</td>
-                            <td>{{ u.apartment.userprofile.FirstName }} {{ u.apartment.userprofile.LastName }}</td>
-                            <td>{{ u.current_raadings|floatformat }}<br>{{ u.current_raadings_c2|floatformat }}</td>
-                             <td>{{ u.cur|floatformat }}<br>{{ u.cur_c2|floatformat}}</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                        </tr>
+                    {% for ap in t.apart %}
+
+
+
+
+                        {% if ap.ut|length == 0 %}
+                            <tr>
+                                <td>{{ ap.numeber }}</td>
+                                {% if ap.userprofile.FirstName|length == 0 %}
+                                    <td> Не добавлен</td>
+                                {% else %}
+                                    <td> {{ ap.userprofile.FirstName }}</td>
+                                {% endif %}
+                                <td>
+                                    <button type="button" class="btn  btn-default btn-xs"
+                                            onclick="addtar({{ ap.id }},'{{ ap.numeber }}',{{ t.id }},'{{ t.name }}','{{ t.type_id }}')">
+                                        Внести показания
+                                    </button>
+                                </td>
+                                <td> --------</td>
+                                <td> --------</td>
+                                <td> --------</td>
+                                <td> --------</td>
+                            </tr>
+
+                        {% else %}
+
+                            {% for q in  ap.ut %}
+                                <tr>
+                                    <td>{{ q.apartment.numeber }}</td>
+
+                                    {% if q.apartment.userprofile.FirstName|length == 0 %}
+                                        <td> Не добавлен</td>
+                                    {% else %}
+                                        <td>{{ q.apartment.userprofile.FirstName }} {{ q.apartment.userprofile.LastName }}</td>
+                                    {% endif %}
+
+
+                                    <td>{{ q.current_raadings|floatformat }} {{ t.unit_measure }}<br>{{ q.current_raadings_c2|floatformat }} {{ t.unit_measure }}
+                                    </td>
+                                    <td><font
+                                            color="red">{{ q.cur|floatformat }} {{ t.unit_measure }}<br>{{ q.cur_c2|floatformat }} {{ t.unit_measure }}
+                                    </font></td>
+
+
+                                    <td> {{ q.formula }}</td>
+                                    <td> {{ q.sum }}</td>
+
+                                    <td>{{ q.dateAdd }}</td>
+                                </tr>
+
+                            {% endfor %}
                         {% endif %}
+
                     {% endfor %}
                     </tbody>
                 </table>
@@ -95,10 +140,132 @@
 
 
 
+
+
+
+
+
+
+
     {% endfor %}
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p id="appNumber">asd</p>
+                        <p id="tarifName">asd</p>
+
+                    </div>
+
+                    <div class="form-group" id="privc1">
+                        <label for="prc">Предыдущие показания</label>
+                        <input type="number" class="form-control" id="prc" placeholder="Предыдущие показания">
+                    </div>
+                    <div class="form-group" id="privc2">
+                        <label for="prc1">Текущие показания</label>
+                        <input type="number" class="form-control" id="prc1" placeholder="Текущие показания">
+                    </div>
+                    <div class="form-group" id="curc1">
+                        <label for="prc">Предыдущие показания</label>
+                        <input type="number" class="form-control" id="prc" placeholder="Предыдущие показания">
+                    </div>
+                    <div class="form-group" id="curc2">
+                        <label for="prc1">Текущие показания</label>
+                        <input type="number" class="form-control" id="prc1" placeholder="Текущие показания">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datap">Дата</label>
+                        <div class="input-group date">
+
+                            <input id="datap" type="text" class="form-control">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group" hidden>
+                        <label for="typeTariff" class="control-label">Подтип</label>
+                        <select id="typeTariff" onchange="f()" class="form-control" name="typeTariff">
+                            {% for t in tar %}
+                                <option value="{{ t.id }}" valuetype="{{ t.type }}">{{ t.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+
+                <script>
+                    $('#datap').datepicker({
+                        format: "mm-dd-yyyy",
+                        language: 'ru',
+                        autoclose: true
+                    });
+
+
+                </script>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
+    <script>
+        function addtar( apID, apName, tarID, tarName, tarType) {
+            $('#myModal').modal('show');
+            $('#privc1').hide();
+            $('#privc2').hide();
+            $('#curc1').hide();
+            $('#curc2').hide();
+
+            $('#tarifName').text('Тариф: ' + tarName);
+            $('#appNumber').text('Номер дома: ' + apName);
+            if (tarType >= 1 && tarType <= 3 || tarType == 8) {
+                $('#privc1').show();
+                $('#curc1').show();
+            } else if (tarType == 4 || tarType >= 9) {
+                $('#privc1').show();
+                $('#privc2').show();
+                $('#curc1').show();
+                $('#curc2').show();
+            } else if (tarType == 5) {
+                $('#privc1').show();
+            }
+            else if (tarType == 7 || tarType == 6) {
+
+            }
+
+             $('#prc').val('');
+             $('#prc1').val('');
+            $.get("/contribution/00-0000/", {apID: apID, tarID: tarID})
+                .done(function (data) {
+
+                    if (data!='none') {
+                        var obj = jQuery.parseJSON(data);
+                        $('#prc').val(obj.priv1);
+                        $('#prc1').val(obj.priv2);
+                    }
+                });
+
+
+        }
+
+        function f() {
+            alert($('#typeTariff option:selected').attr("valuetype"));
+        }
+    </script>
 
 
 
-
-    asdasdasdasd
 {% endblock %}
