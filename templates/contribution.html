@@ -150,84 +150,96 @@
     {% endfor %}
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <p id="appNumber">asd</p>
-                        <p id="tarifName">asd</p>
+            <form action="/contribution/00-0000/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="apID" id="apID">
+            <input type="hidden" name="tarID" id="tarID">
+            <input type="hidden" name="tarType" id="tarType">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p id="appNumber">asd</p>
+                            <p id="tarifName">asd</p>
 
-                    </div>
+                        </div>
 
-                    <div class="form-group" id="privc1">
-                        <label for="prc">Предыдущие показания</label>
-                        <input type="number" class="form-control" id="prc" placeholder="Предыдущие показания">
-                    </div>
-                    <div class="form-group" id="privc2">
-                        <label for="prc1">Текущие показания</label>
-                        <input type="number" class="form-control" id="prc1" placeholder="Текущие показания">
-                    </div>
-                    <div class="form-group" id="curc1">
-                        <label for="prc">Предыдущие показания</label>
-                        <input type="number" class="form-control" id="prc" placeholder="Предыдущие показания">
-                    </div>
-                    <div class="form-group" id="curc2">
-                        <label for="prc1">Текущие показания</label>
-                        <input type="number" class="form-control" id="prc1" placeholder="Текущие показания">
-                    </div>
+                        <div class="form-group" id="privc1">
+                            <label for="prc">Предыдущие показания</label>
+                            <input type="number" name="previous" class="form-control" id="prc" placeholder="Предыдущие показания">
+                        </div>
+                        <div class="form-group" id="curc1" >
+                            <label for="prc1">Текущие показания</label>
+                            <input type="number" name="current" class="form-control" id="prc1" placeholder="Текущие показания">
+                        </div>
+                        <div class="form-group" id="privc2">
+                            <label for="prc">Предыдущие показания</label>
+                            <input type="number" name="previous_c2" class="form-control" id="prc" placeholder="Предыдущие показания">
+                        </div>
+                        <div class="form-group" id="curc2">
+                            <label for="prc1">Текущие показания</label>
+                            <input type="number" name="current_c2" class="form-control" id="prc1" placeholder="Текущие показания">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="datap">Дата</label>
-                        <div class="input-group date">
+                        <div class="form-group">
+                            <label for="datap">Дата</label>
+                            <div class="input-group date">
 
-                            <input id="datap" type="text" class="form-control">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
+                                <input id="datap" name="datap"  required type="text" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
                             </div>
+
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="typeTariff" class="control-label">Подтип</label>
+                            <select id="typeTariff" onchange="f()" class="form-control" name="typeTariff">
+                                {% for t in tar %}
+                                    <option value="{{ t.id }}" valuetype="{{ t.type }}">{{ t.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
 
                     </div>
-                    <div class="form-group" hidden>
-                        <label for="typeTariff" class="control-label">Подтип</label>
-                        <select id="typeTariff" onchange="f()" class="form-control" name="typeTariff">
-                            {% for t in tar %}
-                                <option value="{{ t.id }}" valuetype="{{ t.type }}">{{ t.name }}</option>
-                            {% endfor %}
-                        </select>
+
+                    <script>
+                        $('#datap').datepicker({
+                            format: "yyyy-mm-dd",
+                            language: 'ru',
+                            autoclose: true
+                        });
+
+
+                    </script>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <input type="submit" value="OK">
                     </div>
 
+
                 </div>
-
-                <script>
-                    $('#datap').datepicker({
-                        format: "mm-dd-yyyy",
-                        language: 'ru',
-                        autoclose: true
-                    });
-
-
-                </script>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
 
     <script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
     <script>
-        function addtar( apID, apName, tarID, tarName, tarType) {
+        function addtar(apID, apName, tarID, tarName, tarType) {
             $('#myModal').modal('show');
             $('#privc1').hide();
             $('#privc2').hide();
             $('#curc1').hide();
             $('#curc2').hide();
+            $('#apID').val(apID);
+            $('#tarID').val(tarID);
+            $('#tarType').val(tarType);
 
             $('#tarifName').text('Тариф: ' + tarName);
             $('#appNumber').text('Номер дома: ' + apName);
@@ -246,12 +258,12 @@
 
             }
 
-             $('#prc').val('');
-             $('#prc1').val('');
+            $('#prc').val('');
+            $('#prc1').val('');
             $.get("/contribution/00-0000/", {apID: apID, tarID: tarID})
                 .done(function (data) {
 
-                    if (data!='none') {
+                    if (data != 'none') {
                         var obj = jQuery.parseJSON(data);
                         $('#prc').val(obj.priv1);
                         $('#prc1').val(obj.priv2);
