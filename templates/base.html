@@ -173,7 +173,7 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.2.3 -->
-<script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
+{% block js %}<script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>{% endblock %}
 <!-- Bootstrap 3.3.6 -->
 <script src="{% static 'dist/js/bootstrap.min.js'%}" ></script>
 <!-- AdminLTE App -->

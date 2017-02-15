@@ -10,21 +10,7 @@
             <div class="margin">
                 <div class="row no-print">
                     <div class="col-xs-12">
-                        <button type="button" class="btn btn-primary btn-lg"
-                                data-toggle="modal"
-                                data-target="#AddPodezd">
-                            <i class="fa fa-plus"></i> Добавить подъезд
-                        </button>
-                        <button type="button" class="btn btn-primary btn-lg"
-                                data-toggle="modal"
-                                data-target="#AddLevelmodal">
-                            <i class="fa fa-plus"></i> Добавить этаж
-                        </button>
-                        <button type="button" class="btn btn-primary btn-lg"
-                                data-toggle="modal"
-                                data-target="#AddApartament">
-                            <i class="fa fa-plus"></i> Добавить квартиру
-                        </button>
+
                     <a class="btn btn-primary btn-lg" href="{% url 'DialogAddApartment' %}" role="button"><i class="fa fa-plus"></i> Добавить</a>
                         <!--Добавление подъезда-->
                         <div id="AddPodezd" class="modal fade">
@@ -170,7 +156,7 @@
                 </table>
             </div><!-- /.box-body -->
             <div class="box-footer">
-                The footer of the box
+               Комментарий: {{ podezd.note }}
             </div><!-- box-footer -->
         </div><!-- /.box -->
 

@@ -4,6 +4,7 @@
 
 {% block content %}
 
+
     <div class="box box-info  ">
         <div class="box-header with-border">
             <h3 class="box-title">Добавление тарифа</h3>
@@ -14,6 +15,19 @@
             {% csrf_token %}
 
             <div class="box-body">
+                <div class="form-group" id="pattern">
+                    <label for="pattern" class="col-sm-2 control-label">Шаблон</label>
+                    <div class="col-sm-10">
+                        <select id="pattern" onchange="GetPattrn()" class="form-control" name="pattern">
+                        <option value="0"></option>
+                            {% for p in patrn %}
+                                <option  value="{{ p.id }}">{{ p.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="{{ form.name.id_for_label }}" class="col-sm-2 control-label">Название</label>
 
@@ -31,19 +45,6 @@
                     </div>
                 </div>
 
-                <div class="form-group" id="SubType">
-                    <label for="typeSubTariff" class="col-sm-2 control-label">Подтип</label>
-                    <div class="col-sm-10">
-                        <select id="typeSubTariff" onchange="f()" class="form-control" name="typeSubTariff">
-                            <option value="1">Без поргов</option>
-                            <option value="2">С 1 порогом</option>
-                            <option value="3">С 2 порогоми</option>
-                            <option value="4">С 1 общим порогом</option>
-                            <option value="5">С 2 общими порогоми</option>
-                        </select>
-
-                    </div>
-                </div>
 
                 <div class="form-group" id="edenicaIzmereniya">
                     <label for="price" class="col-sm-2 control-label">Еденица измерения</label>
@@ -64,12 +65,11 @@
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.pricefor1CB }}Льгота:
+                                        {{ form.pricefor1CB }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %"></div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
@@ -91,12 +91,11 @@
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.pricefor2CB }}Льгота:
+                                        {{ form.pricefor2CB }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %"></div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
@@ -120,12 +119,11 @@
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.pricefor3CB }}Льгота:
+                                        {{ form.pricefor3CB }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %"></div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
@@ -141,12 +139,11 @@
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox">Льгота:
+                                        {{ form.pricefor1CB }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %"></div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
@@ -156,17 +153,16 @@
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                               {{ form.T1price}}
+                                {{ form.T1price }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                       {{ form.T1priceCB}}Льгота:
+                                        {{ form.T1priceCB }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %">
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
@@ -177,17 +173,16 @@
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                {{ form.T2price}}
+                                {{ form.T2price }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.T2priceCB}}Льгота:
+                                        {{ form.T2priceCB }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %">
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
@@ -223,17 +218,16 @@
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                {{ form.T1price1}}
+                                {{ form.T1price1 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.T1priceCB1}}Льгота:
+                                        {{ form.T1priceCB1 }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %">
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
@@ -244,17 +238,16 @@
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-md-3">
-                                {{ form.T2price1}}
+                                {{ form.T2price1 }}
                             </div>
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.T2priceCB1}}Льгота:
+                                        {{ form.T2priceCB1 }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %">
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
@@ -294,12 +287,11 @@
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.T1priceCB2 }}Льгота:
+                                        {{ form.T1priceCB2 }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %">
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
@@ -315,12 +307,11 @@
                             <div class="col-md-1">
                                 <div class="checkbox">
                                     <label>
-                                        {{ form.T2priceCB2 }}Льгота:
+                                        {{ form.T2priceCB2 }}Льгота
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-3"><input type="text" class="form-control" id="pricefor1"
-                                                         placeholder=" %">
+                            <div class="col-md-3">
                             </div>
                         </div>
                     </div>
@@ -347,8 +338,9 @@
     </div>
     <script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
     <script>
-        $("#id_fariff_type")
-            .change(function () {
+
+        function filter() {
+
                     $('#SubType').hide();
                     $('#edenicaIzmereniya').hide();
                     $('#cenaZaedinicu').hide();
@@ -377,13 +369,26 @@
                     $('#id_pricefor3').prop('required', false);
                     $('#id_sum').prop('required', false);
 
-                    if (this.value == 1) {
+                    $('#t1por1').hide();
+                    $('#t2por1').hide();
+                    $('#t1pricezaEd').hide();
+                    $('#t2pricezaEd').hide();
+                    $('#t1por2').hide();
+                    $('#t2por2').hide();
+                    $('#t1cenaZaed').hide();
+                    $('#t2cenaZaed').hide();
+                    $('#tpor1').hide();
+                    $('#vtoroyPor').hide();
+
+                    trtypeval = $("#id_fariff_type").val();
+
+                    if (trtypeval == 1) {
                         $('#edenicaIzmereniya').show();
                         $('#cenaZaedinicu').show();
                         $('#id_price').prop('required', true);
                         $('#id_pricefor1').prop('required', true);
 
-                    } else if (this.value == 2) {
+                    } else if (trtypeval == 2) {
                         $('#edenicaIzmereniya').show();
                         $('#cenaZaedinicu').show();
                         $('#porogperviy').show();
@@ -392,7 +397,7 @@
                         $('#id_pricefor1').prop('required', true);
                         $('#id_porog1').prop('required', true);
                         $('#id_pricefor2').prop('required', true);
-                    } else if (this.value == 3) {
+                    } else if (trtypeval == 3) {
                         $('#edenicaIzmereniya').show();
                         $('#cenaZaedinicu').show();
                         $('#porogperviy').show();
@@ -406,82 +411,119 @@
                         $('#id_porog2').prop('required', true);
                         $('#id_pricefor3').prop('required', true);
 
-                    } else if (this.value == 4) {
+                    } else if (trtypeval == 4) {
                         $('#edenicaIzmereniya').show();
                         $('#cenaZaedinicu').show();
                         $('#id_price').prop('required', true);
                         $('#id_pricefor1').prop('required', true);
-                    } else if (this.value == 5) {
+                    } else if (trtypeval == 5) {
                         $('#edenicaIzmereniya').show();
                         $('#cenaZaedinicu').show();
                         $('#id_price').prop('required', true);
                         $('#id_pricefor1').prop('required', true);
-                    } else if (this.value == 6) {
-                    } else if (this.value == 7) {
+                    } else if (trtypeval == 6) {
+                    } else if (trtypeval == 7) {
                         $('#summaPrice').show();
                         $('#id_sum').prop('required', true);
                     }
-                    else if (this.value == 8) {
+                    else if (trtypeval == 8) {
                         $('#edenicaIzmereniya').show();
                         $('#summaPrice').show();
                         $('#id_sum').prop('required', true);
                         $('#id_price').prop('required', true);
                     }
-                    else if (this.value == 9) {
+                    else if (trtypeval == 9) {
+                        $('#SubType').show();
+                        $('#edenicaIzmereniya').show();
+                        $('#t1cena').show();
+                        $('#t2cena').show();
+                        $('#id_price').prop('required', true);
+                    }
+                    else if (trtypeval == 10) {
                         $('#SubType').show();
                         $('#edenicaIzmereniya').show();
                         $('#t1cena').show();
                         $('#t2cena').show();
                         $('#id_price').prop('required', true);
 
+                        $('#t1por1').show();
+                        $('#t2por1').show();
+                        $('#t1pricezaEd').show();
+                        $('#t2pricezaEd').show();
+                    }
+                    else if (trtypeval == 11) {
+                        $('#SubType').show();
+                        $('#edenicaIzmereniya').show();
+                        $('#t1cena').show();
+                        $('#t2cena').show();
+                        $('#id_price').prop('required', true);
 
+                        $('#t1por1').show();
+                        $('#t2por1').show();
+                        $('#t1pricezaEd').show();
+                        $('#t2pricezaEd').show();
+                        $('#t1por2').show();
+                        $('#t2por2').show();
+                        $('#t1cenaZaed').show();
+                        $('#t2cenaZaed').show();
+                    }
+                    else if (trtypeval == 12) {
+                        $('#SubType').show();
+                        $('#edenicaIzmereniya').show();
+                        $('#t1cena').show();
+                        $('#t2cena').show();
+                        $('#id_price').prop('required', true);
 
+                        $('#tpor1').show();
+                        $('#t1pricezaEd').show();
+                        $('#t2pricezaEd').show();
+                    }
+                    else if (trtypeval == 13) {
+                        $('#SubType').show();
+                        $('#edenicaIzmereniya').show();
+                        $('#t1cena').show();
+                        $('#t2cena').show();
+                        $('#id_price').prop('required', true);
 
-                        f();
+                        $('#tpor1').show();
+                        $('#t1pricezaEd').show();
+                        $('#t2pricezaEd').show();
+                        $('#vtoroyPor').show();
 
+                        $('#t1cenaZaed').show();
+                        $('#t2cenaZaed').show();
+                    }
+                    else if (trtypeval == 14) {
+                        $('#summaPrice').show();
+                        $('#id_sum').prop('required', true);
+                    }
+                    else if (trtypeval == 15) {
+                        $('#summaPrice').show();
+                        $('#id_sum').prop('required', true);
+                    }
+                    else if (trtypeval == 16) {
+                        $('#summaPrice').show();
+                        $('#id_sum').prop('required', true);
+                    }
+                    else if (trtypeval == 17) {
+                        $('#summaPrice').show();
+                        $('#id_sum').prop('required', true);
                     }
 
-                }
-            )
-            .change();
-        function f() {
-            $('#t1por1').hide();
-            $('#t2por1').hide();
-            $('#t1pricezaEd').hide();
-            $('#t2pricezaEd').hide();
-            $('#t1por2').hide();
-            $('#t2por2').hide();
-            $('#t1cenaZaed').hide();
-            $('#t2cenaZaed').hide();
-            $('#tpor1').hide();
-            $('#vtoroyPor').hide();
-            if ($('#typeSubTariff').val() == '2') {
-                $('#t1por1').show();
-                $('#t2por1').show();
-                $('#t1pricezaEd').show();
-                $('#t2pricezaEd').show();
-            } else if ($('#typeSubTariff').val() == '3') {
-                $('#t1por1').show();
-                $('#t2por1').show();
-                $('#t1pricezaEd').show();
-                $('#t2pricezaEd').show();
-                $('#t1por2').show();
-                $('#t2por2').show();
-                $('#t1cenaZaed').show();
-                $('#t2cenaZaed').show();
-            } else if ($('#typeSubTariff').val() == '4') {
-                $('#tpor1').show();
-                $('#t1pricezaEd').show();
-                $('#t2pricezaEd').show();
-            } else if ($('#typeSubTariff').val() == '5') {
-                $('#tpor1').show();
-                $('#t1pricezaEd').show();
-                $('#t2pricezaEd').show();
-                $('#vtoroyPor').show();
 
-                $('#t1cenaZaed').show();
-                $('#t2cenaZaed').show();
-            }
+        }
+
+        filter();
+        function GetPattrn() {
+            $.get("/pattern_ajax", {patID: $('#pattern option:selected').val()})
+                .done(function (data) {
+                    if (data != 'none') {
+                        var obj = jQuery.parseJSON(data);
+                        $('#id_price').val(obj.name);
+                        $("#id_fariff_type").val(obj.id);
+                        filter();
+                    }
+                });
 
         }
     </script>

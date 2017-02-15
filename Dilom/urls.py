@@ -34,6 +34,7 @@ urlpatterns = [
 
     url(r'^tariff/', tarif_page, name='tariff'),
     url(r'^tariff_add/', add_taritt, name='tariff_add'),
+    url(r'^pattern_ajax/', pattern_ajax, name='pattern_ajax'),
     url(r'^contribution/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', contribution, name='contribution'),
 
 
@@ -41,6 +42,7 @@ urlpatterns = [
     url(r'^apartment/$', apartments, name='apartment'),
     url(r'^AddPodezd/$', AddPodezdPOST, name='AddPodezdPOST'),
     url(r'^AddLevel/$', AddLevelPOST, name='AddLevelPOST'),
+    url(r'^enableTarif/$', enableTarif, name='enableTarif'),
     url(r'^DialogAddApartment/$', DialogAddApartment, name='DialogAddApartment'),
     url(r'^apartment/addUser/$', ApartamentAddUser, name='apartamentAddUser'),
     url(r'^apartment/(?P<pk>\d+)/edit/$', editApartament, name='editapartament')

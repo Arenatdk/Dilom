@@ -22,22 +22,17 @@
                     <th>Название</th>
                     <th>Тип</th>
                     <th>Коментарий</th>
-                    <th style="width: 40px">Видимый</th>
+                    <th style="width: 40px">Включен</th>
                 </tr>
                 {% for tarif in tariff %}
                     <tr>
 
-                        <td>{{ tarif.id }}</td>
+                        <td><input type="checkbox" {% if tarif in CurTarrif %} checked {% endif %}></td>
                         <td>{{ tarif.name }}</td>
                         <td>{{ tarif.type.type_name }}</td>
                         <td>{{ tarif.coment }}</td>
-                        <td>{% if tarif.enable %}
-                            <a href="#" data-skin="skin-green" class="btn btn-success btn-xs"><span
-                                    class="glyphicon glyphicon-eye-open"></span></a>
-                        {% else %}
-                            <a href="#" data-skin="skin-red" class="btn btn-danger btn-xs"><span
-                                    class="glyphicon glyphicon-eye-close"></span></a>
-                        {% endif %}
+                        <td><input type="checkbox" onclick="f(this,{{ pk }},{{ tarif.id }})"
+                                   {% if tarif in CurTarrif %}checked{% endif %}></td>
                         </td>
 
 
@@ -51,6 +46,45 @@
         </div><!-- box-footer -->
     </div><!-- /.box -->
 
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Данные о квартире</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-block btn-primary btn-xs" data-toggle="modal"
+                        data-target="#editCount" data-whatever="@mdo">Редактировать
+                </button>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-3">Количество проживающих:<h3> {{ Apart.countResidents }} чл.</h3></div>
+                <div class="col-md-3">Количество комнат:<h3> {{ Apart.countRooms }}</h3></div>
+                <div class="col-md-3">Общая площадь:<h3> {{ Apart.area }} м²</h3></div>
+                <div class="col-md-3">Отопительная площадь:<h3> {{ Apart.HotArea }} м²</h3></div>
+            </div>
+        {% if Apart.subsidyi %}
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><font color="red"><h3>Льготы: ({{ Apart.subsidyi.percent }}%) {{ Apart.subsidyi.name }}</h3></font></div>
+                <div class="col-md-4"></div>
+            </div>
+        {% endif %}
+            {% if Apart.isRent %}
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><font color="red"><h3>Помещение сдается в аренду</h3></font></div>
+                <div class="col-md-4"></div>
+            </div>
+            {% endif %}
+
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            The footer of the box
+        </div><!-- box-footer -->
+    </div><!-- /.box -->
+
+
 
     <div class="box">
         <div class="box-header with-border">
@@ -60,10 +94,10 @@
             </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
-            <div class="row">
 
 
-                {% if owner == '' %}
+            {% if owner == '' %}
+                <div class="row">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
@@ -72,12 +106,17 @@
                         </button>
                     </div>
                     <div class="col-md-4"></div>
-                {% else %}
-                    <div class="col-md-4">Фамилия:<h3> {{ owner.LastName }}</h3></div>
-                    <div class="col-md-4">Имя:<h3> {{ owner.FirstName }}</h3></div>
-                    <div class="col-md-4">Отчество:<h3> {{ owner.patronymic }}</h3></div>
-                {% endif %}
-            </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-3">Фамилия:<h3> {{ owner.LastName }}</h3></div>
+                    <div class="col-md-3">Имя:<h3> {{ owner.FirstName }}</h3></div>
+                    <div class="col-md-3">Отчество:<h3> {{ owner.patronymic }}</h3></div>
+                    <div class="col-md-3">Номер телефона:<h3> {{ owner.number }}</h3></div>
+
+                </div>
+            {% endif %}
+
         </div><!-- /.box-body -->
         <div class="box-footer">
             The footer of the box
@@ -126,6 +165,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="{{ addUserApartment.countRes.id_for_label }}" class="col-sm-2 control-label">Количество
+                                проживающих</label>
+                            <div class="col-sm-10">
+                                {{ addUserApartment.countRes }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-default">Сохранить</button>
                             </div>
@@ -137,7 +184,65 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editCount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                </div>
+                <form action="/apartment/{{ pk }}/edit/" method="post">
+                    {% csrf_token %}
+                    {{ ea.Apartment }}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Количество проживающих</label>
+                        {{ ea.countRes }}
+                    </div>
 
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Количество комнат</label>
+                        {{ ea.countRooms }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Общая площадь</label>
+                        {{ ea.area }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Отопительная площадь</label>
+                        {{ ea.HotArea }}
+                    </div>
+
+
+
+                <div class="form-group">
+                        <label for="exampleInputEmail1">Льготы</label>
+                        <select id="subs" onchange="GetPattrn()" class="form-control" name="subs">
+                        <option value="0"></option>
+                            {% for p in subs %}
+                                <option {% if Apart.subsidyi.id == p.id %} selected{% endif %} value="{{ p.id }}">{{ p.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Сдается в аренду </label>
+                        {{ ea.isRent }}
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+                    </form>
+            </div>
+        </div>
+    </div>
 
     <script src="{% static 'plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
     <!-- Bootstrap 3.3.6 -->
@@ -148,5 +253,15 @@
         jQuery(function ($) {
             $("#id_number").mask("+38 (999) 999-99-99");
         });
+
+        function f(ChkB, pk, idTarrif) {
+
+            $.get("/enableTarif", {pk: pk, idTarrif: idTarrif, enable: $(ChkB).prop('checked')})
+                .done(function (data) {
+                    if (data != 'none') {
+
+                    }
+                });
+        }
     </script>
 {% endblock %}

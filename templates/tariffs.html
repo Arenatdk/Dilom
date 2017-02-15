@@ -15,6 +15,8 @@
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Название</th>
+
+                    <th>Цена</th>
                     <th>Тип</th>
                     <th>Коментарий</th>
                     <th style="width: 40px">Видимый</th>
@@ -24,12 +26,68 @@
 
                         <td>{{ tarif.id }}</td>
                         <td>{{ tarif.name }}</td>
-                        <td>{{ tarif.type.type_name}}</td>
+
+                        {% if tarif.type_id == 1 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}</td>
+                        {% elif tarif.type_id == 2 %}
+
+                            <td>до {{ tarif.level1_t1 }} {{ tarif.unit_measure }}: <b>{{ tarif.price0_t1 }}</b> грн. за
+                                1 {{ tarif.unit_measure }}<br>после {{ tarif.level1_t1 }} {{ tarif.unit_measure }}:
+                                <b>{{ tarif.price1_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}(1 порог)
+                            </td>
+                        {% elif tarif.type_id == 3 %}
+
+                            <td>до {{ tarif.level1_t1 }} {{ tarif.unit_measure }}: <b>{{ tarif.price0_t1 }}</b> за
+                                1 {{ tarif.unit_measure }} грн.
+                                <br>после {{ tarif.level1_t1 }} {{ tarif.unit_measure }}: <b>{{ tarif.price1_t1 }}</b>
+                                грн. за 1 {{ tarif.unit_measure }}(1 порог)
+                                <br>после {{ tarif.level2_t1 }} {{ tarif.unit_measure }}: <b>{{ tarif.price2_t1 }}</b>
+                                грн. за 1 {{ tarif.unit_measure }}(2 порог)
+                            </td>
+                        {% elif tarif.type_id == 4 %}
+
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}</td>
+                        {% elif tarif.type_id == 5 %}
+
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}</td>
+                        {% elif tarif.type_id == 6 %}
+
+                            <td>Произвольная</td>
+                        {% elif tarif.type_id == 7 %}
+
+                            <td><b>{{ tarif.price0_t1 }}</b> грн.</td>
+                        {% elif tarif.type_id == 8 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за объем</td>
+                        {% elif tarif.type_id == 9 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}</td>
+
+                        {% elif tarif.type_id == 10 %}
+                            <td>в процессе </td>
+                        {% elif tarif.type_id == 11 %}
+                            <td>в процессе </td>
+                        {% elif tarif.type_id == 12 %}
+                            <td>в процессе </td>
+                        {% elif tarif.type_id == 13 %}
+                            <td>в процессе </td>
+                        {% elif tarif.type_id == 14 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за человека</td>
+                        {% elif tarif.type_id == 15 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за комнату</td>
+                        {% elif tarif.type_id == 16 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 м² площади</td>
+                        {% elif tarif.type_id == 17 %}
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 м² отоп. площади</td>
+
+                        {% endif %}
+                        <td>{{ tarif.type.type_name }}</td>
+
                         <td>{{ tarif.coment }}</td>
                         <td>{% if tarif.enable %}
-                            <a href="#" data-skin="skin-green" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open" ></span></a>
+                            <a href="#" data-skin="skin-green" class="btn btn-success btn-xs"><span
+                                    class="glyphicon glyphicon-eye-open"></span></a>
                         {% else %}
-                            <a href="#" data-skin="skin-red" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-eye-close" ></span></a>
+                            <a href="#" data-skin="skin-red" class="btn btn-danger btn-xs"><span
+                                    class="glyphicon glyphicon-eye-close"></span></a>
                         {% endif %}
                         </td>
 
