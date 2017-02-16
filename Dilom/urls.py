@@ -19,6 +19,7 @@ from Auth.views import *
 from tariff.views import *
 from Vote.views import *
 from apartments.views import *
+from UserPanel.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,6 +29,9 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^account/$', index_page, name='home'),
     url(r'^vote/$', vote, name='vote'),
+
+
+    url(r'^UserPanel/$', panel, name='panel'),
 
 
 

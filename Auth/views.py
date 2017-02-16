@@ -8,7 +8,11 @@ from django.contrib.auth.models import User
 # Create your views here.
 def login(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/account/')
+        if request.user.userprofile.isOSMD:
+            return HttpResponseRedirect('/account/')
+        else:
+            return HttpResponseRedirect('/UserPanel/')
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -16,8 +20,9 @@ def login(request):
         if user is not None and user.is_active:
             # Правильный пароль и пользователь "активен"
             auth.login(request, user)
+
             # Перенаправление на "правильную" страницу
-            return HttpResponseRedirect('/account/')
+
     return render(request, "login.html")
 
 

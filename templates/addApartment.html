@@ -18,7 +18,7 @@
             <table class="table table-bordered nth-2-center">
                 <tbody>
                 <tr>
-                    <th style="width: 10px">#</th>
+
                     <th>Название</th>
                     <th>Тип</th>
                     <th>Коментарий</th>
@@ -27,7 +27,7 @@
                 {% for tarif in tariff %}
                     <tr>
 
-                        <td><input type="checkbox" {% if tarif in CurTarrif %} checked {% endif %}></td>
+
                         <td>{{ tarif.name }}</td>
                         <td>{{ tarif.type.type_name }}</td>
                         <td>{{ tarif.coment }}</td>

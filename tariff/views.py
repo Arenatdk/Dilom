@@ -106,7 +106,7 @@ def add_taritt(request):
                 t.benefit0_t1 = form.cleaned_data['pricefor1CB']
                 t.level1_t1 = form.cleaned_data['porog1']
                 t.price1_t1 = form.cleaned_data['pricefor2']
-                t.benefit_t1 = form.cleaned_data['pricefor2CB']
+                t.benefit1_t1 = form.cleaned_data['pricefor2CB']
             elif id_type==3:
                 t.unit_measure = form.cleaned_data['price']
                 t.type_id = 3
@@ -346,16 +346,35 @@ def contribution(request,year,month):
 
                 if t.type_id == 1:
                     util.cur = util.current_raadings - util.previous_readings
-                    util.sum = round((util.current_raadings - util.previous_readings)*t.price0_t1, 2)
-                    util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price0_t1)
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+
+                        util.sum = round( ((util.current_raadings - util.previous_readings) * t.price0_t1 ) - (((util.current_raadings - util.previous_readings) * t.price0_t1 )*util.apartment.subsidyi.percent/100) , 2)
+                        util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price0_t1) +'-' + str(util.apartment.subsidyi.percent )+ '%'
+                    else:
+
+                        util.sum = round((util.current_raadings - util.previous_readings)*t.price0_t1, 2)
+                        util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price0_t1)
                 elif t.type_id == 2:
                     util.cur = util.current_raadings - util.previous_readings
-                    if (util.current_raadings - util.previous_readings) < t.level1_t1:
-                        util.sum = round((util.current_raadings - util.previous_readings) * t.price0_t1, 2)
-                        util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price0_t1)
+                    if (util.current_raadings - util.previous_readings) <= t.level1_t1: #Ниже первого порога
+                        if t.benefit0_t1 and util.apartment.subsidyi:
+                            util.sum = round(((util.current_raadings - util.previous_readings) * t.price0_t1) - (((util.current_raadings - util.previous_readings) * t.price0_t1) * util.apartment.subsidyi.percent / 100),2)
+                            util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                        else:
+                            util.sum = round((util.current_raadings - util.previous_readings) * t.price0_t1, 2)
+                            util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price0_t1)
                     else:
-                        util.sum = round((util.current_raadings - util.previous_readings) * t.price1_t1, 2)
-                        util.formula = str(util.current_raadings - util.previous_readings) + '*' + str(t.price1_t1)+' (1 порог)'
+                        if util.apartment.subsidyi:
+                            if t.benefit0_t1 and t.benefit1_t1:
+                                util.sum = round((t.level1_t1 * t.price0_t1 - (t.level1_t1 * t.price0_t1*util.apartment.subsidyi.percent/100)) + ((util.current_raadings - util.previous_readings - t.level1_t1) * t.price1_t1-((util.current_raadings - util.previous_readings - t.level1_t1) * t.price1_t1 )*util.apartment.subsidyi.percent/100), 2)
+                                util.formula = str(t.level1_t1) + '*' + str(t.price0_t1)+'-'+ str(util.apartment.subsidyi.percent)+'%' + '+' + str(
+                                    (util.current_raadings - util.previous_readings - t.level1_t1)) + '*' + str(
+                                    t.price1_t1) +'-'+ str(util.apartment.subsidyi.percent)+'%' + ' (1 порог)'
+                            elif t.benefit0_t1 :
+                                pass #добавить 1 и 2 льготы  в 1 и 2 тариф с процентами
+                        else:
+                            util.sum = round(t.level1_t1 *t.price0_t1 + (util.current_raadings - util.previous_readings - t.level1_t1 ) * t.price1_t1  , 2)
+                            util.formula = str(t.level1_t1) + '*' + str(t.price0_t1)+'+'+str((util.current_raadings - util.previous_readings - t.level1_t1 )) + '*'+str(t.price1_t1)+ ' (1 порог)'
                 elif t.type_id == 3:
                     util.cur = util.current_raadings - util.previous_readings
                     if (util.current_raadings - util.previous_readings) < t.level1_t1:

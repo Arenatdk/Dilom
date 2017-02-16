@@ -1,0 +1,41 @@
+{% extends "UserBase.html" %}
+{% load static %}
+
+{% block content %}
+<div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Данные о квартире</h3>
+            <div class="box-tools pull-right">
+
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-3">Количество проживающих:<h3> {{ Apart.countResidents }} чл.</h3></div>
+                <div class="col-md-3">Количество комнат:<h3> {{ Apart.countRooms }}</h3></div>
+                <div class="col-md-3">Общая площадь:<h3> {{ Apart.area }} м²</h3></div>
+                <div class="col-md-3">Отопительная площадь:<h3> {{ Apart.HotArea }} м²</h3></div>
+            </div>
+        {% if Apart.subsidyi %}
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><font color="red"><h3>Льготы: ({{ Apart.subsidyi.percent }}%) {{ Apart.subsidyi.name }}</h3></font></div>
+                <div class="col-md-4"></div>
+            </div>
+        {% endif %}
+            {% if Apart.isRent %}
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><font color="red"><h3>Помещение сдается в аренду</h3></font></div>
+                <div class="col-md-4"></div>
+            </div>
+            {% endif %}
+
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            The footer of the box
+        </div><!-- box-footer -->
+    </div><!-- /.box -->
+
+{% endblock %}
