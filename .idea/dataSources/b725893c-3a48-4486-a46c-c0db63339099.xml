@@ -9,8 +9,8 @@
     </database>
     <schema id="3" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-02-16.21:57:23.213</IntrospectionTimestamp>
-      <IntrospectionStateNumber>62503</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-02-21.20:52:45.338</IntrospectionTimestamp>
+      <IntrospectionStateNumber>62688</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -203,15 +203,15 @@
     </table>
     <table id="47" parent="3" name="tariff_tariffs">
       <ObjectId>17146</ObjectId>
-      <StateNumber>62503</StateNumber>
+      <StateNumber>62687</StateNumber>
     </table>
     <table id="48" parent="3" name="tariff_tariffs_residents">
       <ObjectId>17157</ObjectId>
-      <StateNumber>62503</StateNumber>
+      <StateNumber>62687</StateNumber>
     </table>
     <table id="49" parent="3" name="tariff_utilities">
       <ObjectId>17242</ObjectId>
-      <StateNumber>62503</StateNumber>
+      <StateNumber>62688</StateNumber>
     </table>
     <column id="50" parent="29" name="id">
       <Position>1</Position>
