@@ -221,7 +221,7 @@
                 <div class="form-group">
                         <label for="exampleInputEmail1">Льготы</label>
                         <select id="subs" onchange="GetPattrn()" class="form-control" name="subs">
-                        <option value="0"></option>
+                        <option value=""></option>
                             {% for p in subs %}
                                 <option {% if Apart.subsidyi.id == p.id %} selected{% endif %} value="{{ p.id }}">{{ p.name }}</option>
                             {% endfor %}

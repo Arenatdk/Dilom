@@ -193,6 +193,10 @@ $(document).ready(function() {
                             <label for="prc">Предыдущие показания</label>
                             <input type="number" name="previous" class="form-control" id="prc" placeholder="Предыдущие показания">
                         </div>
+                        <div class="form-group" id="proizsum">
+                            <label for="prc">Произвольная сумма</label>
+                            <input type="number" name="psum" class="form-control" id="psum" placeholder="Произвольная сумма">
+                        </div>
                         <div class="form-group" id="curc1" >
                             <label for="prc1">Текущие показания</label>
                             <input type="number" name="current" class="form-control" id="prc1" placeholder="Текущие показания">
@@ -261,6 +265,7 @@ $(document).ready(function() {
             $('#privc2').hide();
             $('#curc1').hide();
             $('#curc2').hide();
+            $('#proizsum').hide();
             $('#apID').val(apID);
             $('#tarID').val(tarID);
             $('#tarType').val(tarType);
@@ -270,18 +275,19 @@ $(document).ready(function() {
             if (tarType >= 1 && tarType <= 3 || tarType == 8) {
                 $('#privc1').show();
                 $('#curc1').show();
-            } else if (tarType == 4 || tarType >= 9) {
+            } else if (tarType == 4 || tarType >= 9 && tarType <=13 ) {
                 $('#privc1').show();
                 $('#privc2').show();
                 $('#curc1').show();
                 $('#curc2').show();
             } else if (tarType == 5) {
-                $('#privc1').show();
+                $('#curc1').show();
             }
             else if ( tarType == 6){
-                $('#privc1').show();
+                $('#proizsum').show();
+
             }
-            else if (tarType == 7 ) {
+            else if (tarType == 7 || tarType == 14 || tarType == 15 || tarType == 16 || tarType == 17 ) {
 
             }
 

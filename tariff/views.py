@@ -294,6 +294,7 @@ def contribution(request,year,month):
         current = request.POST.get('current')
         previous_c2 = request.POST.get('previous_c2')
         current_c2 = request.POST.get('current_c2')
+        psum = request.POST.get('psum')
 
         #print(tarID)
         #print(apID)
@@ -320,11 +321,14 @@ def contribution(request,year,month):
             u1.previous_readings_c2 = previous_c2
             u1.current_raadings_c2 = current_c2
         elif tarType == 5:
-            u1.current_raadings = previous
+            u1.current_raadings = current
         elif tarType == 6:
-            u1.current_raadings = previous
+            u1.current_raadings = psum
         elif tarType == 7:
             pass
+        elif tarType ==8:
+            u1.previous_readings = previous
+            u1.current_raadings = current
         u1.save()
         return HttpResponseRedirect('/contribution/00-0000/')
 
@@ -429,21 +433,83 @@ def contribution(request,year,month):
                 elif t.type_id == 4:
                     util.cur = util.current_raadings - util.previous_readings
                     util.cur_c2 = util.current_raadings_c2 - util.previous_readings_c2
-                    util.sum = round(((util.current_raadings - util.previous_readings) + (util.current_raadings_c2 - util.previous_readings_c2)) *t.price0_t1, 2)
-                    util.formula ='('+ str(util.current_raadings - util.previous_readings) +' + '+str(util.current_raadings_c2 - util.previous_readings_c2) + ') *' + str(t.price0_t1)
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                        util.sum = round(((util.cur + util.cur_c2) *t.price0_t1)- ((util.cur + util.cur_c2) *t.price0_t1) * util.apartment.subsidyi.percent / 100, 2)
+                        util.formula ='('+ str(util.cur) +'+'+str(util.cur_c2) + ')*' + str(t.price0_t1)+'-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = round(( util.cur + util.cur_c2) * t.price0_t1, 2)
+                        util.formula = '(' + str(util.cur) + '+' + str(util.cur_c2) + ')*' + str(t.price0_t1)
+
+
                 elif t.type_id == 5:
                     util.cur = util.current_raadings
-                    util.sum = round( util.current_raadings * t.price0_t1, 2)
-                    util.formula = str(util.current_raadings) +'*'+ str(t.price0_t1)
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                        util.sum = round(util.current_raadings * t.price0_t1 - util.current_raadings * t.price0_t1  * util.apartment.subsidyi.percent / 100, 2)
+                        util.formula = str(util.current_raadings) + '*' + str(t.price0_t1) +'-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = round( util.current_raadings * t.price0_t1, 2)
+                        util.formula = str(util.current_raadings) +'*'+ str(t.price0_t1)
                 elif t.type_id == 6:
                     util.cur = util.current_raadings
                     util.sum = util.current_raadings
                     util.formula = str(util.current_raadings)
                 elif t.type_id == 7:
-                    util.sum = t.price0_t1
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                         util.sum = t.price0_t1 - t.price0_t1 * util.apartment.subsidyi.percent / 100
+                         util.formula = str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = t.price0_t1
+                        util.formula = str(t.price0_t1)
+                elif t.type_id == 8:
+                    util.cur = util.current_raadings - util.previous_readings
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                         util.sum = t.price0_t1 - t.price0_t1 * util.apartment.subsidyi.percent / 100
+                         util.formula = str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = t.price0_t1
+                        util.formula = str(t.price0_t1)
                 elif t.type_id == 14:
-                    util.sum = ap.countResidents
-                    util.formula = str(util.current_raadings)
+
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                        util.sum = util.apartment.countResidents * t.price0_t1 - (util.apartment.countResidents * t.price0_t1) * util.apartment.subsidyi.percent / 100
+                        util.formula = str(util.apartment.countResidents) + '*' + str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = util.apartment.countResidents * t.price0_t1
+                        util.formula = str(util.apartment.countResidents) + '*'+ str(t.price0_t1)
+                    if util.apartment.countResidents <=0:
+                        util.formula = 'Настройте в ЛК'
+                        util.sum= 'Настройте в ЛК'
+
+                elif t.type_id == 15:
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                        util.sum = util.apartment.countRooms * t.price0_t1 - (util.apartment.countRooms * t.price0_t1) * util.apartment.subsidyi.percent / 100
+                        util.formula = str(util.apartment.countRooms) + '*' + str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = util.apartment.countRooms * t.price0_t1
+                        util.formula = str(util.apartment.countRooms) + '*'+ str(t.price0_t1)
+                    if util.apartment.countRooms <=0:
+                        util.formula = 'Настройте в ЛК'
+                        util.sum= 'Настройте в ЛК'
+                elif t.type_id == 16:
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                        util.sum = util.apartment.area * t.price0_t1 - (util.apartment.area * t.price0_t1) * util.apartment.subsidyi.percent / 100
+                        util.formula = str(util.apartment.area) + '*' + str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = util.apartment.area * t.price0_t1
+                        util.formula = str(util.apartment.area) + '*'+ str(t.price0_t1)
+                    if util.apartment.area <=0:
+                        util.formula = 'Настройте в ЛК'
+                        util.sum= 'Настройте в ЛК'
+                elif t.type_id == 17:
+                    if t.benefit0_t1 and util.apartment.subsidyi:
+                        util.sum = util.apartment.HotArea * t.price0_t1 - (util.apartment.HotArea * t.price0_t1) * util.apartment.subsidyi.percent / 100
+                        util.formula = str(util.apartment.HotArea) + '*' + str(t.price0_t1) + '-' + str(util.apartment.subsidyi.percent) + '%'
+                    else:
+                        util.sum = util.apartment.HotArea * t.price0_t1
+                        util.formula = str(util.apartment.HotArea) + '*' + str(t.price0_t1)
+                    if util.apartment.HotArea <= 0:
+                        util.formula = 'Настройте в ЛК'
+                        util.sum = 'Настройте в ЛК'
                 ap.ut.append(util)
             t.apart.append(ap)
 
