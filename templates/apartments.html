@@ -141,8 +141,8 @@
                                     {% for ap in ApartmentList %}
                                         {% if ap.level_id == level.id %}
 
-                                            <a href="{% url 'editapartament' ap.id %}"> <span
-                                                    class="label label-primary">{{ ap.numeber }}</span></a>
+                                            <a href="{% url 'editapartament' ap.id %}"> <button type="button" class="btn btn-primary">{{ ap.numeber }}</button>
+                                                    </a>
 
                                         {% endif %}
 

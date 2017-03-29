@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
 from Auth.models import UserProfile
 from apartments.models import Apartment
 
@@ -35,8 +37,17 @@ class Tariffs(models.Model):
     benefit2_t2 = models.BooleanField(default=False, verbose_name='Льгота')
     coment = models.TextField(max_length=100, blank=True, default="")
     residents = models.ManyToManyField(Apartment) #Связь с квартирами
+    datStart = models.DateField(blank=True)
+    datEnd = models.DateField(blank=True)
     def __str__(self):
         return ( self.name)
+
+    def dat(self):
+        if now().date() < self.datEnd and now().date() > self.datStart:
+            self.enable = True
+        else:
+            self.enable = False
+        self.save()
 
 
 class Patterns(models.Model):

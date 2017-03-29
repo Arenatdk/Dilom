@@ -6,7 +6,9 @@ from .models import *
 from collections import OrderedDict
 from Auth.models import UserProfile
 from tariff.models import Tariffs, subsidy
-
+from tariff.views import sumFormula
+from tariff.models import *
+from django.utils import timezone
 
 # Create your views here.
 class AddPodezd(forms.Form):
@@ -140,6 +142,7 @@ def editApartament(request, pk):
         # create a form instance and populate it with data from the request:
         ea = editApartInfo(request.POST)
         # check whether it's valid:
+
         if ea.is_valid():
             a = Apartment.objects.get(id=pk)
             a.countResidents = ea.cleaned_data['countRes']
@@ -173,7 +176,17 @@ def editApartament(request, pk):
     CurTarrif = Tariffs.objects.filter(residents=pk)
     tariff= Tariffs.objects.filter(user=request.user)
     subs = subsidyi.objects.all()
-    return render(request, "addApartment.html", {'pk':pk,'addUserApartment':addUserApartment,'owner':owner,'tariff':tariff,'CurTarrif':CurTarrif, 'Apart':a,'ea':ea, 'subs':subs})
+
+    util= Utilities.objects.filter( apartment_id = pk ).order_by('-dateAdd','paid')
+    for u in util:
+        sumFormula(u.tarif, u)
+
+
+
+
+
+
+    return render(request, "addApartment.html", {'pk':pk,'addUserApartment':addUserApartment,'owner':owner,'tariff':tariff,'CurTarrif':CurTarrif, 'Apart':a,'ea':ea, 'subs':subs,'util':util})
 
 def enableTarif(request):
     pk = request.GET.get('pk')
@@ -208,15 +221,23 @@ class AddApartmentUser(forms.Form):
 
 def ApartamentAddUser(request):
     if request.method == 'POST':
+        if int(request.POST.get('opID')) ==1:
+            p = UserProfile(id=request.POST.get('userID'))
+            p.number = request.POST.get('number')
+            p.FirstName = request.POST.get('FirstName')
+            p.LastName = request.POST.get('LastName')
+            p.patronymic = request.POST.get('patronymic')
+            p.save()
+            return HttpResponseRedirect('/apartment/' + request.POST.get('apartID') + '/edit/')
+        if int(request.POST.get('opID')) == 2:
+            a = Apartment.objects.get(id=request.POST.get('apartID'))
+            a.userprofile=None
+            import uuid
+            a.uid=uuid.uuid4()
+            a.save()
+            return HttpResponseRedirect('/apartment/' + request.POST.get('apartID') + '/edit/')
         addUserApartment = AddApartmentUser(request.POST)
         if addUserApartment.is_valid():
-            if UserProfile.objects.filter(number=addUserApartment.cleaned_data['number']):
-                a = Apartment.objects.get(id =request.POST.get('apartID'))
-                a.user = UserProfile.objects.get(number=addUserApartment.cleaned_data['number'])
-                a.countResidents = addUserApartment.cleaned_data['countRes']
-                a.save()
-                print(a.user)
-            else:
                 p= UserProfile()
                 p.number =addUserApartment.cleaned_data['number']
                 p.FirstName =addUserApartment.cleaned_data['FirstName']

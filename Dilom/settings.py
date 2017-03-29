@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'Auth',
     'apartments',
     'tariff',
+    'UsetTariff',
+    'NewsPanel',
 ]
 
 MIDDLEWARE = [

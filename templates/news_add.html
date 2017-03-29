@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block js %}
+
+{% endblock %}
+{% block content %}
+    <script src="{% static 'plugins/jQuery/jquery-2.2.3.min.js'%}"></script>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'%}">
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Добавить новость
+            </h3>
+            <!-- tools box -->
+            <div class="pull-right box-tools">
+
+            </div>
+            <!-- /. tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body pad">
+            <form action="/news_add/" method="post">
+                {% csrf_token %}
+
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Заголовок</label>
+                    {{form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Текст</label>
+                    {{form.text }}
+                </div>
+
+                <button type="submit" class="btn btn-default">Сохранить</button>
+
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script src="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'%}"></script>
+
+    <script>
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+
+            //bootstrap WYSIHTML5 - text editor
+            $(".textarea").wysihtml5();
+        });
+    </script>
+{% endblock %}

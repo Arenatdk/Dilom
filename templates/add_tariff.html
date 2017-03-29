@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block js %}
+{% endblock %}
 
 {% block content %}
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.js"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+            crossorigin="anonymous"></script>
 
 
     <div class="box box-info  ">
@@ -19,9 +25,9 @@
                     <label for="pattern" class="col-sm-2 control-label">Шаблон</label>
                     <div class="col-sm-10">
                         <select id="pattern" onchange="GetPattrn()" class="form-control" name="pattern">
-                        <option value="0"></option>
+                            <option value="0"></option>
                             {% for p in patrn %}
-                                <option  value="{{ p.id }}">{{ p.name }}</option>
+                                <option value="{{ p.id }}">{{ p.name }}</option>
                             {% endfor %}
                         </select>
 
@@ -325,7 +331,86 @@
                         {{ form.comment }}
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="coment" class="col-sm-2 control-label">Начислить всем</label>
+
+                    <div class="checkbox">
+                        <label>
+                            {{ form.ForAll }}
+                        </label>
+                    </div>
+                </div>
             </div>
+
+
+
+            <div class="form-group">
+                <label for="datStart" class="col-sm-2 control-label">Дата начала</label>
+
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        {{ form.datStart}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="datEnd" class="col-sm-2 control-label">Дата окончания</label>
+
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        {{ form.datEnd}}
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <link rel="stylesheet" href="{% static 'plugins/datepicker/datepicker3.css' %}">
+
+            <script src="{% static 'plugins/datepicker/bootstrap-datepicker.js' %}"></script>
+            <script src="{% static 'plugins/datepicker/locales/bootstrap-datepicker.ru.js' %}"></script>
+
+
+            <script>
+                $('#id_datEnd').datepicker({
+                    format: "dd.mm.yyyy",
+                    viewMode: "days",
+                    minViewMode: "days",
+                    language: 'ru',
+                    autoclose: true
+                });
+                 $('#id_datStart').datepicker({
+                    format: "dd.mm.yyyy",
+                    viewMode: "days",
+                    minViewMode: "days",
+                    language: 'ru',
+                    autoclose: true
+                });
+
+
+            </script>
+
 
 
             <!-- /.box-body -->
@@ -341,174 +426,149 @@
 
         function filter() {
 
-                    $('#SubType').hide();
-                    $('#edenicaIzmereniya').hide();
-                    $('#cenaZaedinicu').hide();
-                    $('#cenaZaedenicu2').hide();
-                    $('#porogperviy').hide();
-                    $('#vtoroyPorog').hide();
-                    $('#cenazaedinicu1').hide();
-                    $('#summaPrice').hide();
-                    $('#t1cena').hide();
-                    $('#t2cena').hide();
-                    $('#t1por1').hide();
-                    $('#t2por1').hide();
-                    $('#tpor1').hide();
-                    $('#t1pricezaEd').hide();
-                    $('#t2pricezaEd').hide();
-                    $('#t1por2').hide();
-                    $('#t2por2').hide();
-                    $('#vtoroyPor').hide();
-                    $('#t1cenaZaed').hide();
-                    $('#t2cenaZaed').hide();
-                    $('#id_price').prop('required', false);
-                    $('#id_pricefor1').prop('required', false);
-                    $('#id_porog1').prop('required', false);
-                    $('#id_pricefor2').prop('required', false);
-                    $('#id_porog2').prop('required', false);
-                    $('#id_pricefor3').prop('required', false);
-                    $('#id_sum').prop('required', false);
+            $('#SubType').hide();
+            $('#edenicaIzmereniya').hide();
+            $('#cenaZaedinicu').hide();
+            $('#cenaZaedenicu2').hide();
+            $('#porogperviy').hide();
+            $('#vtoroyPorog').hide();
+            $('#cenazaedinicu1').hide();
+            $('#summaPrice').hide();
+            $('#t1cena').hide();
+            $('#t2cena').hide();
+            $('#t1por1').hide();
+            $('#t2por1').hide();
+            $('#tpor1').hide();
+            $('#t1pricezaEd').hide();
+            $('#t2pricezaEd').hide();
+            $('#t1por2').hide();
+            $('#t2por2').hide();
+            $('#vtoroyPor').hide();
+            $('#t1cenaZaed').hide();
+            $('#t2cenaZaed').hide();
+            $('#id_price').prop('required', false);
+            $('#id_pricefor1').prop('required', false);
+            $('#id_porog1').prop('required', false);
+            $('#id_pricefor2').prop('required', false);
+            $('#id_porog2').prop('required', false);
+            $('#id_pricefor3').prop('required', false);
+            $('#id_sum').prop('required', false);
 
-                    $('#t1por1').hide();
-                    $('#t2por1').hide();
-                    $('#t1pricezaEd').hide();
-                    $('#t2pricezaEd').hide();
-                    $('#t1por2').hide();
-                    $('#t2por2').hide();
-                    $('#t1cenaZaed').hide();
-                    $('#t2cenaZaed').hide();
-                    $('#tpor1').hide();
-                    $('#vtoroyPor').hide();
+            $('#t1por1').hide();
+            $('#t2por1').hide();
+            $('#t1pricezaEd').hide();
+            $('#t2pricezaEd').hide();
+            $('#t1por2').hide();
+            $('#t2por2').hide();
+            $('#t1cenaZaed').hide();
+            $('#t2cenaZaed').hide();
+            $('#tpor1').hide();
+            $('#vtoroyPor').hide();
 
-                    trtypeval = $("#id_fariff_type").val();
+            trtypeval = $("#id_fariff_type").val();
 
-                    if (trtypeval == 1) {
-                        $('#edenicaIzmereniya').show();
-                        $('#cenaZaedinicu').show();
-                        $('#id_price').prop('required', true);
-                        $('#id_pricefor1').prop('required', true);
+            if (trtypeval == 1) {
+                $('#edenicaIzmereniya').show();
+                $('#cenaZaedinicu').show();
+                $('#id_price').prop('required', true);
+                $('#id_pricefor1').prop('required', true);
 
-                    } else if (trtypeval == 2) {
-                        $('#edenicaIzmereniya').show();
-                        $('#cenaZaedinicu').show();
-                        $('#porogperviy').show();
-                        $('#cenaZaedenicu2').show();
-                        $('#id_price').prop('required', true);
-                        $('#id_pricefor1').prop('required', true);
-                        $('#id_porog1').prop('required', true);
-                        $('#id_pricefor2').prop('required', true);
-                    } else if (trtypeval == 3) {
-                        $('#edenicaIzmereniya').show();
-                        $('#cenaZaedinicu').show();
-                        $('#porogperviy').show();
-                        $('#cenaZaedenicu2').show();
-                        $('#cenazaedinicu1').show();
-                        $('#vtoroyPorog').show();
-                        $('#id_price').prop('required', true);
-                        $('#id_pricefor1').prop('required', true);
-                        $('#id_porog1').prop('required', true);
-                        $('#id_pricefor2').prop('required', true);
-                        $('#id_porog2').prop('required', true);
-                        $('#id_pricefor3').prop('required', true);
+            } else if (trtypeval == 2) {
+                $('#edenicaIzmereniya').show();
+                $('#cenaZaedinicu').show();
+                $('#porogperviy').show();
+                $('#cenaZaedenicu2').show();
+                $('#id_price').prop('required', true);
+                $('#id_pricefor1').prop('required', true);
+                $('#id_porog1').prop('required', true);
+                $('#id_pricefor2').prop('required', true);
+            } else if (trtypeval == 3) {
+                $('#edenicaIzmereniya').show();
+                $('#cenaZaedinicu').show();
+                $('#porogperviy').show();
+                $('#cenaZaedenicu2').show();
+                $('#cenazaedinicu1').show();
+                $('#vtoroyPorog').show();
+                $('#id_price').prop('required', true);
+                $('#id_pricefor1').prop('required', true);
+                $('#id_porog1').prop('required', true);
+                $('#id_pricefor2').prop('required', true);
+                $('#id_porog2').prop('required', true);
+                $('#id_pricefor3').prop('required', true);
 
-                    } else if (trtypeval == 4) {
-                        $('#edenicaIzmereniya').show();
-                        $('#cenaZaedinicu').show();
-                        $('#id_price').prop('required', true);
-                        $('#id_pricefor1').prop('required', true);
-                    } else if (trtypeval == 5) {
-                        $('#edenicaIzmereniya').show();
-                        $('#cenaZaedinicu').show();
-                        $('#id_price').prop('required', true);
-                        $('#id_pricefor1').prop('required', true);
-                    } else if (trtypeval == 6) {
-                    } else if (trtypeval == 7) {
-                        $('#summaPrice').show();
-                        $('#id_sum').prop('required', true);
-                    }
-                    else if (trtypeval == 8) {
-                        $('#edenicaIzmereniya').show();
-                        $('#summaPrice').show();
-                        $('#id_sum').prop('required', true);
-                        $('#id_price').prop('required', true);
-                    }
-                    else if (trtypeval == 9) {
-                        $('#SubType').show();
-                        $('#edenicaIzmereniya').show();
-                        $('#t1cena').show();
-                        $('#t2cena').show();
-                        $('#id_price').prop('required', true);
-                    }
-                    else if (trtypeval == 10) {
-                        $('#SubType').show();
-                        $('#edenicaIzmereniya').show();
-                        $('#t1cena').show();
-                        $('#t2cena').show();
-                        $('#id_price').prop('required', true);
+            } else if (trtypeval == 4) {
+                $('#edenicaIzmereniya').show();
+                $('#cenaZaedinicu').show();
+                $('#id_price').prop('required', true);
+                $('#id_pricefor1').prop('required', true);
+            } else if (trtypeval == 5) {
+                $('#edenicaIzmereniya').show();
+                $('#cenaZaedinicu').show();
+                $('#id_price').prop('required', true);
+                $('#id_pricefor1').prop('required', true);
+            } else if (trtypeval == 6) {
+            } else if (trtypeval == 7) {
+                $('#summaPrice').show();
+                $('#id_sum').prop('required', true);
+            }
+            else if (trtypeval == 8) {
+                $('#edenicaIzmereniya').show();
+                $('#summaPrice').show();
+                $('#id_sum').prop('required', true);
+                $('#id_price').prop('required', true);
+            }
+            else if (trtypeval == 9) {
+                $('#SubType').show();
+                $('#edenicaIzmereniya').show();
+                $('#t1cena').show();
+                $('#t2cena').show();
+                $('#id_price').prop('required', true);
+            }
+            else if (trtypeval == 10) {
+                $('#SubType').show();
+                $('#edenicaIzmereniya').show();
+                $('#t1cena').show();
+                $('#t2cena').show();
+                $('#id_price').prop('required', true);
 
-                        $('#t1por1').show();
-                        $('#t2por1').show();
-                        $('#t1pricezaEd').show();
-                        $('#t2pricezaEd').show();
-                    }
-                    else if (trtypeval == 11) {
-                        $('#SubType').show();
-                        $('#edenicaIzmereniya').show();
-                        $('#t1cena').show();
-                        $('#t2cena').show();
-                        $('#id_price').prop('required', true);
+                $('#t1por1').show();
+                $('#t2por1').show();
+                $('#t1pricezaEd').show();
+                $('#t2pricezaEd').show();
+            }
+            else if (trtypeval == 11) {
+                $('#SubType').show();
+                $('#edenicaIzmereniya').show();
+                $('#t1cena').show();
+                $('#t2cena').show();
+                $('#id_price').prop('required', true);
 
-                        $('#t1por1').show();
-                        $('#t2por1').show();
-                        $('#t1pricezaEd').show();
-                        $('#t2pricezaEd').show();
-                        $('#t1por2').show();
-                        $('#t2por2').show();
-                        $('#t1cenaZaed').show();
-                        $('#t2cenaZaed').show();
-                    }
-                    else if (trtypeval == 12) {
-                        $('#SubType').show();
-                        $('#edenicaIzmereniya').show();
-                        $('#t1cena').show();
-                        $('#t2cena').show();
-                        $('#id_price').prop('required', true);
+                $('#t1por1').show();
+                $('#t2por1').show();
+                $('#t1pricezaEd').show();
+                $('#t2pricezaEd').show();
+                $('#t1por2').show();
+                $('#t2por2').show();
+                $('#t1cenaZaed').show();
+                $('#t2cenaZaed').show();
+            }
 
-                        $('#tpor1').show();
-                        $('#t1pricezaEd').show();
-                        $('#t2pricezaEd').show();
-                    }
-                    else if (trtypeval == 13) {
-                        $('#SubType').show();
-                        $('#edenicaIzmereniya').show();
-                        $('#t1cena').show();
-                        $('#t2cena').show();
-                        $('#id_price').prop('required', true);
-
-                        $('#tpor1').show();
-                        $('#t1pricezaEd').show();
-                        $('#t2pricezaEd').show();
-                        $('#vtoroyPor').show();
-
-                        $('#t1cenaZaed').show();
-                        $('#t2cenaZaed').show();
-                    }
-                    else if (trtypeval == 14) {
-                        $('#summaPrice').show();
-                        $('#id_sum').prop('required', true);
-                    }
-                    else if (trtypeval == 15) {
-                        $('#summaPrice').show();
-                        $('#id_sum').prop('required', true);
-                    }
-                    else if (trtypeval == 16) {
-                        $('#summaPrice').show();
-                        $('#id_sum').prop('required', true);
-                    }
-                    else if (trtypeval == 17) {
-                        $('#summaPrice').show();
-                        $('#id_sum').prop('required', true);
-                    }
+            else if (trtypeval == 12) {
+                $('#summaPrice').show();
+                $('#id_sum').prop('required', true);
+            }
+            else if (trtypeval == 13) {
+                $('#summaPrice').show();
+                $('#id_sum').prop('required', true);
+            }
+            else if (trtypeval == 14) {
+                $('#summaPrice').show();
+                $('#id_sum').prop('required', true);
+            }
+            else if (trtypeval == 15) {
+                $('#summaPrice').show();
+                $('#id_sum').prop('required', true);
+            }
 
 
         }

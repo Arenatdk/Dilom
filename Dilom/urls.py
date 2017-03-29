@@ -20,6 +20,8 @@ from tariff.views import *
 from Vote.views import *
 from apartments.views import *
 from UserPanel.views import *
+from NewsPanel.views import *
+from UsetTariff.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,10 +30,21 @@ urlpatterns = [
 
     url(r'^logout/$', logout, name='logout'),
     url(r'^account/$', index_page, name='home'),
+
     url(r'^vote/$', vote, name='vote'),
+    url(r'^vote_add/$', vote_add, name='vote_add'),
+
+
+
+    url(r'^news/$', news, name='news'),
+    url(r'^news_add/$', news_add, name='news_add'),
+    url(r'^news_del/(?P<pk>\d+)/$', news_del, name='news_del'),
+
 
 
     url(r'^UserPanel/$', panel, name='panel'),
+    url(r'^UserTariff/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', UserTariff, name='UserTariff'),
+    url(r'^NewsUser/$', NewsUser, name='NewsUser'),
 
 
 
@@ -39,8 +52,10 @@ urlpatterns = [
     url(r'^tariff/', tarif_page, name='tariff'),
     url(r'^tariff_add/', add_taritt, name='tariff_add'),
     url(r'^pattern_ajax/', pattern_ajax, name='pattern_ajax'),
-    url(r'^contribution/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', contribution, name='contribution'),
+    url(r'^tarPDF/', tarpdf, name='tarpdf'),
 
+    url(r'^contribution/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', contribution, name='contribution'),
+    url(r'^addpaid/', addpaid, name='addpaid'),
 
     #apartament
     url(r'^apartment/$', apartments, name='apartment'),

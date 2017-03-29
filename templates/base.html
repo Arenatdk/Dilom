@@ -114,7 +114,7 @@ desired effect
             <ul class="sidebar-menu">
                 <li class="header">Меню</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li  {% if 'account/' in request.path %}class="active"{% endif %}><a href="{% url 'home' %}"/><i class="fa fa-home"></i> <span>Дом</span></a></li>
+                <li  {% if 'account/' in request.path %}class="active"{% endif %}><a href="{% url 'home' %}"><i class="fa fa-home"></i> <span>Дом</span></a></li>
                 <li {% if 'apartment/' in request.path %}class="active"{% endif %}><a href="{% url 'apartment' %}"><i class="fa fa-building"></i> <span>Квартиры</span></a></li>
                 <li class="treeview {% if 'tariff/' in request.path %}active {% endif %}">
                     <a href="#"><i class="fa fa-money"></i> <span>Финансы</span>
@@ -131,7 +131,7 @@ desired effect
                     </ul>
                 </li>
                 <li  {% if 'vote/' in request.path %}class="active"{% endif %}><a href="{% url 'vote' %}"><i class="fa fa-pie-chart"></i> <span>Голосование</span></a></li>
-                <li ><a href="#"><i class="fa fa-newspaper-o"></i> <span>Новости</span></a></li>
+                <li  {% if 'news/' in request.path %}class="active"{% endif %}><a href="{% url 'news' %}"><i class="fa fa-newspaper-o"></i> <span>Новости</span></a></li>
 
             </ul>
             <!-- /.sidebar-menu -->
@@ -143,14 +143,7 @@ desired effect
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Page Header
-                <small>Optional description</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
-            </ol>
+            
         </section>
 
         <!-- Main content -->

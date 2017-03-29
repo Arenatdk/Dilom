@@ -8,3 +8,9 @@ def vote(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
     return render(request,"vote.html")
+
+
+def vote_add(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    return render(request,"vote_add.html")

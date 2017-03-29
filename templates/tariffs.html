@@ -7,7 +7,13 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Тарифы</h3>
-        </div>
+
+        <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <a href="{% url "tariff_add" %}" class="btn btn-primary"> Добавить</a>
+                </div>
+
         <!-- /.box-header -->
         <div class="box-body">
             <table class="table table-bordered nth-2-center">
@@ -18,6 +24,7 @@
 
                     <th>Цена</th>
                     <th>Тип</th>
+                    <th>Интервал</th>
                     <th>Коментарий</th>
                     <th style="width: 40px">Видимый</th>
                 </tr>
@@ -59,27 +66,39 @@
                         {% elif tarif.type_id == 8 %}
                             <td><b>{{ tarif.price0_t1 }}</b> грн. за объем</td>
                         {% elif tarif.type_id == 9 %}
-                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}</td>
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                <b>{{ tarif.price0_t2 }}</b> грн. за 1 {{ tarif.unit_measure }}</td>
 
                         {% elif tarif.type_id == 10 %}
-                            <td>в процессе </td>
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                <b>{{ tarif.price0_t2 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                Порог1: <b>{{ tarif.level1_t1 }}</b>;<b> {{ tarif.level1_t2 }}</b><br>
+                            <b>{{ tarif.price1_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                <b>{{ tarif.price1_t2 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+
+                            </td>
                         {% elif tarif.type_id == 11 %}
-                            <td>в процессе </td>
+                            <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                <b>{{ tarif.price0_t2 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                Порог1: <b>{{ tarif.level1_t1 }}</b>;<b> {{ tarif.level1_t2 }}</b><br>
+                            <b>{{ tarif.price1_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                <b>{{ tarif.price1_t2 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                Порог2: <b>{{ tarif.level2_t1 }}</b>;<b> {{ tarif.level2_t2 }}</b><br>
+                            <b>{{ tarif.price2_t1 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                                <b>{{ tarif.price2_t2 }}</b> грн. за 1 {{ tarif.unit_measure }}<br>
+                            </td>
                         {% elif tarif.type_id == 12 %}
-                            <td>в процессе </td>
-                        {% elif tarif.type_id == 13 %}
-                            <td>в процессе </td>
-                        {% elif tarif.type_id == 14 %}
                             <td><b>{{ tarif.price0_t1 }}</b> грн. за человека</td>
-                        {% elif tarif.type_id == 15 %}
+                        {% elif tarif.type_id == 13 %}
                             <td><b>{{ tarif.price0_t1 }}</b> грн. за комнату</td>
-                        {% elif tarif.type_id == 16 %}
+                        {% elif tarif.type_id == 14 %}
                             <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 м² площади</td>
-                        {% elif tarif.type_id == 17 %}
+                        {% elif tarif.type_id == 15 %}
                             <td><b>{{ tarif.price0_t1 }}</b> грн. за 1 м² отоп. площади</td>
 
                         {% endif %}
                         <td>{{ tarif.type.type_name }}</td>
+                        <td>{{ tarif.datStart |date:"c"}}<br>{{ tarif.datEnd |date:"c"}} </td>
 
                         <td>{{ tarif.coment }}</td>
                         <td>{% if tarif.enable %}
@@ -100,14 +119,8 @@
         <!-- /.box-body -->
 
         <div class="box-footer clearfix">
-            <a href="{% url "tariff_add" %}" class="btn btn-primary"> Добавить</a>
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">«</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">»</a></li>
-            </ul>
+
+
         </div>
     </div>
 

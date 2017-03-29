@@ -20,7 +20,10 @@ def login(request):
         if user is not None and user.is_active:
             # Правильный пароль и пользователь "активен"
             auth.login(request, user)
-
+            if request.user.userprofile.isOSMD:
+                return HttpResponseRedirect('/account/')
+            else:
+                return HttpResponseRedirect('/UserPanel/')
             # Перенаправление на "правильную" страницу
 
     return render(request, "login.html")
@@ -90,7 +93,10 @@ def register(request):
 
 
             auth.login(request, user)
-            return HttpResponseRedirect('/account/')
+            if t.userprofile.isOSMD:
+                return HttpResponseRedirect('/account/')
+            else:
+                return HttpResponseRedirect('/UserPanel/')
         else:
             errors['username'] ='Логин занят'
     else:

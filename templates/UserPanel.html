@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block content %}
+
+
+
+
+
 <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Данные о квартире</h3>
@@ -17,6 +22,12 @@
                 <div class="col-md-3">Общая площадь:<h3> {{ Apart.area }} м²</h3></div>
                 <div class="col-md-3">Отопительная площадь:<h3> {{ Apart.HotArea }} м²</h3></div>
             </div>
+            <div class="row">
+                    <div class="col-md-3">Номер подъезда<h3> {{ Apart.level.podezd.numder }}</h3></div>
+                    <div class="col-md-3">Номер квартиры:<h3> {{ Apart.numeber }}</h3></div>
+                    <div class="col-md-3">Этаж:<h3> {{ Apart.level.level_number }}</h3></div>
+
+                </div>
         {% if Apart.subsidyi %}
             <div class="row">
                 <div class="col-md-4"></div>
@@ -34,7 +45,7 @@
 
         </div><!-- /.box-body -->
         <div class="box-footer">
-            The footer of the box
+
         </div><!-- box-footer -->
     </div><!-- /.box -->
 

@@ -6,12 +6,12 @@
 <>
 {% block content %}
     <script
-  src="https://code.jquery.com/jquery-3.1.1.js"
-  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
-  crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.css"/>
+            src="https://code.jquery.com/jquery-3.1.1.js"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.css"/>
 
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.13/datatables.min.js"></script>
 
 
     <div class="form-group">
@@ -48,14 +48,14 @@
 
 
 
-<script>
+    <script>
 
-$(document).ready(function() {
-    $('.table').DataTable({
-        "bPaginate": false
-    });
-} );
-</script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "bPaginate": false
+            });
+        });
+    </script>
 
 
 
@@ -70,29 +70,31 @@ $(document).ready(function() {
                 </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
             <div class="box-body">
-                <table id="example"   class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
 
                     <tr>
-                        <th>Номер дома</th>
+                        <th>Номер квартиры</th>
                         <th>Владелец</th>
                         <th>Показания</th>
                         <th>Израсходовано</th>
                         <th>Расчет стоймости</th>
                         <th>Сумма</th>
-                        <th>Дата добавления</th>
+                        <th>Период</th>
+                        <th>Оплата</th>
                     </tr>
 
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>Номер дома</th>
+                        <th>Номер квартиры</th>
                         <th>Владелец</th>
                         <th>Показания</th>
                         <th>Израсходовано</th>
                         <th>Расчет стоймости</th>
                         <th>Сумма</th>
-                        <th>Дата добавления</th>
+                        <th>Период</th>
+                        <th>Оплата</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -105,9 +107,11 @@ $(document).ready(function() {
                             <tr>
                                 <td>{{ ap.numeber }}</td>
                                 {% if ap.userprofile.FirstName|length == 0 %}
-                                    <td> <a href="/apartment/{{ ap.id }}/edit/">Добавить</a></td>
+                                    <td><a href="/apartment/{{ ap.id }}/edit/">Добавить</a></td>
                                 {% else %}
-                                    <td> <a href="/apartment/{{ ap.id }}/edit/">{{ ap.userprofile.FirstName }} {{ ap.userprofile.LastName }}</a></td>
+                                    <td>
+                                        <a href="/apartment/{{ ap.id }}/edit/">{{ ap.userprofile.FirstName }} {{ ap.userprofile.LastName }}</a>
+                                    </td>
                                 {% endif %}
                                 <td>
                                     <button type="button" class="btn  btn-default btn-xs"
@@ -115,6 +119,7 @@ $(document).ready(function() {
                                         Внести показания
                                     </button>
                                 </td>
+                                <td> --------</td>
                                 <td> --------</td>
                                 <td> --------</td>
                                 <td> --------</td>
@@ -128,9 +133,11 @@ $(document).ready(function() {
                                     <td>{{ q.apartment.numeber }}</td>
 
                                     {% if q.apartment.userprofile.FirstName|length == 0 %}
-                                        <td> <a href="/apartment/{{ ap.id }}/edit/">Не добавлен</a></td>
+                                        <td><a href="/apartment/{{ ap.id }}/edit/">Не добавлен</a></td>
                                     {% else %}
-                                        <td><a href="/apartment/{{ ap.id }}/edit/">{{ q.apartment.userprofile.FirstName }} {{ q.apartment.userprofile.LastName }}</a></td>
+                                        <td>
+                                            <a href="/apartment/{{ ap.id }}/edit/">{{ q.apartment.userprofile.FirstName }} {{ q.apartment.userprofile.LastName }}</a>
+                                        </td>
                                     {% endif %}
 
 
@@ -144,7 +151,17 @@ $(document).ready(function() {
                                     <td> {{ q.formula }}</td>
                                     <td> {{ q.sum }}</td>
 
-                                    <td>{{ q.dateAdd }}</td>
+                                    <td>{{ q.dateFirst }}<br>{{ q.dateAdd }}</td>
+                                    {% if q.paid %}
+                                        <td>Оплачено<br>{{ q.paid_date }}</td>
+                                    {% else %}
+                                        <td>
+                                            <button type="button" class="btn  btn-default btn-xs"
+                                                    onclick="addpaid({{ q.id }},{{ q.sum }})">
+                                                Оплатить
+                                            </button>
+                                        </td>
+                                    {% endif %}
                                 </tr>
 
                             {% endfor %}
@@ -155,7 +172,7 @@ $(document).ready(function() {
                 </table>
             </div><!-- /.box-body -->
             <div class="box-footer">
-                The footer of the box
+                {{ t.coment }}
             </div><!-- box-footer -->
         </div><!-- /.box -->
 
@@ -172,10 +189,10 @@ $(document).ready(function() {
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <form action="/contribution/00-0000/" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="apID" id="apID">
-            <input type="hidden" name="tarID" id="tarID">
-            <input type="hidden" name="tarType" id="tarType">
+                {% csrf_token %}
+                <input type="hidden" name="apID" id="apID">
+                <input type="hidden" name="tarID" id="tarID">
+                <input type="hidden" name="tarType" id="tarType">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -191,30 +208,35 @@ $(document).ready(function() {
 
                         <div class="form-group" id="privc1">
                             <label for="prc">Предыдущие показания</label>
-                            <input type="number" name="previous" class="form-control" id="prc" placeholder="Предыдущие показания">
+                            <input type="number" name="previous" class="form-control" id="prc"
+                                   placeholder="Предыдущие показания">
                         </div>
                         <div class="form-group" id="proizsum">
                             <label for="prc">Произвольная сумма</label>
-                            <input type="number" name="psum" class="form-control" id="psum" placeholder="Произвольная сумма">
+                            <input type="number" name="psum" class="form-control" id="psum"
+                                   placeholder="Произвольная сумма">
                         </div>
-                        <div class="form-group" id="curc1" >
+                        <div class="form-group" id="curc1">
                             <label for="prc1">Текущие показания</label>
-                            <input type="number" name="current" class="form-control" id="prc1" placeholder="Текущие показания">
+                            <input type="number" name="current" class="form-control" id="prc1"
+                                   placeholder="Текущие показания">
                         </div>
                         <div class="form-group" id="privc2">
                             <label for="prc">Предыдущие показания</label>
-                            <input type="number" name="previous_c2" class="form-control" id="prc" placeholder="Предыдущие показания">
+                            <input type="number" name="previous_c2" class="form-control" id="prcc2"
+                                   placeholder="Предыдущие показания">
                         </div>
                         <div class="form-group" id="curc2">
                             <label for="prc1">Текущие показания</label>
-                            <input type="number" name="current_c2" class="form-control" id="prc1" placeholder="Текущие показания">
+                            <input type="number" name="current_c2" class="form-control" id="prc1"
+                                   placeholder="Текущие показания">
                         </div>
 
                         <div class="form-group">
                             <label for="datap">Дата</label>
                             <div class="input-group date">
 
-                                <input id="datap" name="datap"  required type="text" class="form-control">
+                                <input id="datap" name="datap" required type="text" class="form-control">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
@@ -254,10 +276,67 @@ $(document).ready(function() {
     </div>
 
 
+    <div class="modal fade" id="paidModal" tabindex="-1" role="dialog">
+    <form action="/addpaid/" method="post">
+         {% csrf_token %}
 
 
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Оплатить</h4>
+                </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <h3><p id="paidsumma">asd</p></h3>
+<input type="hidden" name="next" value="{{ request.path }}">
+                            <input id="idpaid" name="idpaid"  type="hidden" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="datapaid">Дата</label>
+                            <div class="input-group date">
+
+                                <input id="datapaid" name="datapaid" required type="text" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Оплачено</button>
+                    </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+         </form>
+    </div><!-- /.modal -->
+<script>
+                        $('#datapaid').datepicker({
+                            format: "yyyy-mm-dd",
+                            language: 'ru',
+                            autoclose: true
+                        });
+
+
+                    </script>
 
     <script>
+
+        function addpaid(id, sum) {
+            $('#paidModal').modal('show');
+             $('#paidsumma').text('Сумма к оплате: ' + sum+' грн.');
+             $('#idpaid').val(id);
+
+        }
 
         function addtar(apID, apName, tarID, tarName, tarType) {
             $('#myModal').modal('show');
@@ -275,7 +354,7 @@ $(document).ready(function() {
             if (tarType >= 1 && tarType <= 3 || tarType == 8) {
                 $('#privc1').show();
                 $('#curc1').show();
-            } else if (tarType == 4 || tarType >= 9 && tarType <=13 ) {
+            } else if (tarType == 4 || tarType >= 9 && tarType <= 11) {
                 $('#privc1').show();
                 $('#privc2').show();
                 $('#curc1').show();
@@ -283,11 +362,11 @@ $(document).ready(function() {
             } else if (tarType == 5) {
                 $('#curc1').show();
             }
-            else if ( tarType == 6){
+            else if (tarType == 6) {
                 $('#proizsum').show();
 
             }
-            else if (tarType == 7 || tarType == 14 || tarType == 15 || tarType == 16 || tarType == 17 ) {
+            else if (tarType == 7 || tarType == 14 || tarType == 15 || tarType == 16 || tarType == 17) {
 
             }
 
@@ -299,7 +378,7 @@ $(document).ready(function() {
                     if (data != 'none') {
                         var obj = jQuery.parseJSON(data);
                         $('#prc').val(obj.priv1);
-                        $('#prc1').val(obj.priv2);
+                        $('#prcc2').val(obj.priv2);
                     }
                 });
 
