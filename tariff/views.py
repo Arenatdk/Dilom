@@ -1,10 +1,12 @@
 
 from django import forms
 from django.shortcuts import render
+
+from Auth.models import UserProfile
 from tariff.models import *
 from django.http import HttpResponseRedirect
 from apartments.models import Apartment
-from django.contrib.auth.models import User
+
 from django.utils import timezone
 from django.http import HttpResponse
 
@@ -63,33 +65,39 @@ def index_page(request):
         return HttpResponseRedirect('/')
     return render(request,"index.html")
 
+
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+
+from django.template.loader import get_template
+from django.template import RequestContext
+from django.http import HttpResponse
+from django.conf import settings
+
+from weasyprint import HTML, CSS
+
 def tarpdf(request):
-    text = ContractText.objects.filter(user=request.user)
-    return render_to_pdf('pfd_template.html', {'text': text}, 'new_contract.pdf')
-
-
-def render_to_pdf(template_src, context_dict, filename='contract.pdf'):
-    """ Отдаю PDF файл """
-    template = get_template(template_src)
-    context = Context(context_dict)
-    html = template.render(context)
-    result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(
-        StringIO.StringIO(html.encode('utf-8')),
-        result,
-        encoding='UTF-8',
-        show_error_as_pdf=True
-    )
-    if not pdf.err:
-        response = HttpResponse(result.getvalue(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=%s' % filename
-        return response
-    return HttpResponse(u'We had some errors!')
+    apid = 16655
 
 
 
 
 
+
+    html_template = get_template('report.html')
+    user = Apartment.objects.get(id = apid)
+
+
+    rendered_html = html_template.render(RequestContext(request, {'you': user})).encode(encoding="UTF-8")
+
+    pdf_file = HTML(string=rendered_html).write_pdf(stylesheets=[CSS( 'static/dist/css/bootstrap.css')])
+
+    http_response = HttpResponse(pdf_file, content_type='application/pdf')
+    http_response['Content-Disposition'] = 'filename="report.pdf"'
+
+    return http_response
 
 
 def tarif_page(request):

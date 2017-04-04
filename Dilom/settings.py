@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'tariff',
     'UsetTariff',
     'NewsPanel',
+    'weasyprint',
 ]
 
 MIDDLEWARE = [
