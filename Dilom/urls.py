@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^UserPanel/$', panel, name='panel'),
     url(r'^UserTariff/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', UserTariff, name='UserTariff'),
     url(r'^NewsUser/$', NewsUser, name='NewsUser'),
+    url(r'^Settings/$', Settings, name='Settings'),
 
 
 

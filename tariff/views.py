@@ -1,5 +1,6 @@
 
 from django import forms
+from django.db.models import Count, Sum
 from django.shortcuts import render
 
 from Auth.models import UserProfile
@@ -63,7 +64,16 @@ class add_tariffForm(forms.Form):
 def index_page(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
-    return render(request,"index.html")
+    countres = Apartment.objects.filter(level__podezd__user=request.user).aggregate(Sum('countResidents'))
+    buy = Utilities.objects.filter(dateAdd__year=now().year, dateAdd__month=now().month,tarif__user=request.user ).aggregate(Count('id'))
+    buyFal= Utilities.objects.filter(paid = False,dateAdd__year=now().year, dateAdd__month=now().month,tarif__user=request.user ).aggregate(Count('id'))
+    sum=0
+    for util in Utilities.objects.filter(paid = False,dateAdd__year=now().year, dateAdd__month=now().month,tarif__user=request.user ):
+        sumFormula(util.tarif, util)
+
+        sum = sum + util.sum
+    print(sum)
+    return render(request,"index.html",{'countres':countres, 'buy':buy,'buyFal':buyFal,'sumdolg':sum})
 
 
 from django.conf import settings

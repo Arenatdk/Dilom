@@ -188,7 +188,7 @@
     {% endfor %}
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <form action="/contribution/00-0000/" method="post">
+            <form action="/contribution/00-0000/" method="post" onsubmit="submt(this);return false;">
                 {% csrf_token %}
                 <input type="hidden" name="apID" id="apID">
                 <input type="hidden" name="tarID" id="tarID">
@@ -228,7 +228,7 @@
                         </div>
                         <div class="form-group" id="curc2">
                             <label for="prc1">Текущие показания</label>
-                            <input type="number" name="current_c2" class="form-control" id="prc1"
+                            <input type="number" name="current_c2" class="form-control" id="prc1c1"
                                    placeholder="Текущие показания">
                         </div>
 
@@ -266,7 +266,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Сохранить</button>
-                        <input type="submit" value="OK">
+
                     </div>
 
 
@@ -277,23 +277,23 @@
 
 
     <div class="modal fade" id="paidModal" tabindex="-1" role="dialog">
-    <form action="/addpaid/" method="post">
-         {% csrf_token %}
+        <form action="/addpaid/" method="post" >
+            {% csrf_token %}
 
 
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Оплатить</h4>
-                </div>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Оплатить</h4>
+                    </div>
 
                     <div class="modal-body">
 
                         <div class="form-group">
                             <h3><p id="paidsumma">asd</p></h3>
-<input type="hidden" name="next" value="{{ request.path }}">
+                            <input type="hidden" name="next" value="{{ request.path }}">
                             <input id="idpaid" name="idpaid"  type="hidden" class="form-control">
                         </div>
                         <div class="form-group">
@@ -315,26 +315,74 @@
                         <button type="submit" class="btn btn-primary">Оплачено</button>
                     </div>
 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-         </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </form>
     </div><!-- /.modal -->
-<script>
-                        $('#datapaid').datepicker({
-                            format: "yyyy-mm-dd",
-                            language: 'ru',
-                            autoclose: true
-                        });
+    <script>
+        $('#datapaid').datepicker({
+            format: "yyyy-mm-dd",
+            language: 'ru',
+            autoclose: true
+        });
 
 
-                    </script>
+    </script>
 
     <script>
+        function submt(f) {
+            $('#privc1').removeClass('has-error');
+            $('#privc2').removeClass('has-error');
+            $('#curc1').removeClass('has-error');
+            $('#curc2').removeClass('has-error');
+            tarType = $('#tarType').val();
+            T1=true
+            T2=true
+            if (tarType >= 1 && tarType <= 3 || tarType == 8) {
+
+                if (parseInt($('#prc').val())<0|| (parseInt($('#prc1').val())< parseInt($('#prc').val())) )
+                {
+                    $('#privc1').addClass('has-error').removeClass('has-success');
+                    $('#curc1').addClass('has-error').removeClass('has-success');
+                    T1=false
+                }
+            } else if (tarType == 4 || tarType >= 9 && tarType <= 11) {
+
+                if (parseInt($('#prc').val())<0|| (parseInt($('#prc1').val())< parseInt($('#prc').val())) )
+                {
+                    $('#privc1').addClass('has-error').removeClass('has-success');
+                    $('#curc1').addClass('has-error').removeClass('has-success');
+                    T1=false
+                }
+
+                if (parseInt($('#prcc2').val())<0||(parseInt($('#prc1c1').val())< parseInt($('#prcc2').val())))
+                {
+                    $('#privc2').addClass('has-error').removeClass('has-success');
+                    $('#curc2').addClass('has-error').removeClass('has-success');
+                    T2=false
+                }
+
+            } else if (tarType == 5) {
+                $('#curc1').show();
+            }
+            else if (tarType == 6) {
+                $('#proizsum').show();
+
+            }
+            else if (tarType == 7 || tarType == 14 || tarType == 15 || tarType == 16 || tarType == 17) {
+
+            }
+
+            if (T1&&T2)
+                f.submit();
+        }
+
+
 
         function addpaid(id, sum) {
             $('#paidModal').modal('show');
-             $('#paidsumma').text('Сумма к оплате: ' + sum+' грн.');
-             $('#idpaid').val(id);
+            $('#paidsumma').text('Сумма к оплате: ' + sum+' грн.');
+            $('#idpaid').val(id);
 
         }
 
@@ -348,22 +396,36 @@
             $('#apID').val(apID);
             $('#tarID').val(tarID);
             $('#tarType').val(tarType);
+            $("#prc").prop('required',false);
+            $("#prc1").prop('required',false);
+            $("#psum").prop('required',false);
 
             $('#tarifName').text('Тариф: ' + tarName);
             $('#appNumber').text('Номер дома: ' + apName);
             if (tarType >= 1 && tarType <= 3 || tarType == 8) {
                 $('#privc1').show();
                 $('#curc1').show();
+
+                $("#prc").prop('required',true);
+                $("#prc1").prop('required',true);
             } else if (tarType == 4 || tarType >= 9 && tarType <= 11) {
                 $('#privc1').show();
                 $('#privc2').show();
                 $('#curc1').show();
                 $('#curc2').show();
+                $("#prc").prop('required',true);
+                $("#prc1").prop('required',true);
+                $("#prcc2").prop('required',true);
+                $("#prc1c1").prop('required',true);
             } else if (tarType == 5) {
                 $('#curc1').show();
+
+                $("#prc1").prop('required',true);
             }
             else if (tarType == 6) {
                 $('#proizsum').show();
+
+                $("#psum").prop('required',true);
 
             }
             else if (tarType == 7 || tarType == 14 || tarType == 15 || tarType == 16 || tarType == 17) {
@@ -371,7 +433,7 @@
             }
 
             $('#prc').val('');
-            $('#prc1').val('');
+            $('#prcc2').val('');
             $.get("/contribution/00-0000/", {apID: apID, tarID: tarID})
                 .done(function (data) {
 
