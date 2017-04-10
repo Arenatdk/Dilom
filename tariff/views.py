@@ -18,44 +18,44 @@ class add_tariffForm(forms.Form):
     name = forms.CharField(max_length=100,label="", widget = forms.TextInput(attrs={'class': 'form-control'}))
     fariff_type = forms.ModelChoiceField(queryset=Tariff_type.objects.all(), initial=0, widget=forms.Select(attrs={'class':'form-control', 'onchange' : 'filter()'}))
     price = forms.CharField(required=False,max_length=15,label="Еденица измерения", widget = forms.TextInput(attrs={'class': 'form-control'}))
-    pricefor1 = forms.FloatField( required=False,min_value=0,label="Цена за единицу", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
+    pricefor1 = forms.FloatField( required=False,min_value=0,label="Цена за единицу", widget = forms.TextInput(attrs={'class': 'form-control','min':'0.01','type':'number','step':'any'}))
     pricefor1CB = forms.BooleanField( required=False,)
     comment= forms.CharField( required=False,max_length=100,label="Комментарий", widget = forms.TextInput(attrs={'class': 'form-control'}))
-    porog1 = forms.FloatField( required=False,min_value=0,label="1 порог", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
-    pricefor2 = forms.FloatField( required=False,min_value=0,label="Цена за единицу", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
+    porog1 = forms.FloatField( required=False,min_value=0,label="1 порог", widget = forms.TextInput(attrs={'min':'0.01','class': 'form-control','type':'number','step':'any'}))
+    pricefor2 = forms.FloatField( required=False,min_value=0,label="Цена за единицу", widget = forms.TextInput(attrs={'min':'0','class': 'form-control','type':'number','step':'any'}))
     pricefor2CB = forms.BooleanField( required=False)
-    porog2 = forms.FloatField( required=False,min_value=0,label="2 порог", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
-    pricefor3 = forms.FloatField( required=False,min_value=0,label="Цена за единицу", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
+    porog2 = forms.FloatField( required=False,min_value=0,label="2 порог", widget = forms.TextInput(attrs={'min':'0.01','class': 'form-control','type':'number','step':'any'}))
+    pricefor3 = forms.FloatField( required=False,min_value=0,label="Цена за единицу", widget = forms.TextInput(attrs={'min':'0.01','class': 'form-control','type':'number','step':'any'}))
     pricefor3CB = forms.BooleanField( required=False)
-    sum = forms.FloatField( required=False,min_value=0,label="Сумма", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
-    T1price = forms.FloatField( required=False,min_value=0,label="Т1, Цена за 1 единицу", widget = forms.TextInput(attrs={'class': 'form-control','type':'number','step':'any'}))
+    sum = forms.FloatField( required=False,min_value=0,label="Сумма", widget = forms.TextInput(attrs={'min':'0.01','class': 'form-control','type':'number','step':'any'}))
+    T1price = forms.FloatField( required=False,min_value=0,label="Т1, Цена за 1 единицу", widget = forms.TextInput(attrs={'min':'0.01','class': 'form-control','type':'number','step':'any'}))
     T1priceCB = forms.BooleanField(required=False)
-    T2price = forms.FloatField(required=False, min_value=0, label="Т1, Цена за 1 единицу", widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+    T2price = forms.FloatField(required=False, min_value=0, label="Т1, Цена за 1 единицу", widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T2priceCB = forms.BooleanField(required=False)
     T1price1 = forms.FloatField(required=False, min_value=0, label="Т1, Цена за 1 единицу",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T1priceCB1 = forms.BooleanField(required=False)
     T2price1 = forms.FloatField(required=False, min_value=0, label="Т1, Цена за 1 единицу",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T2priceCB1 = forms.BooleanField(required=False)
     T1price2 = forms.FloatField(required=False, min_value=0, label="Т1, Цена за 1 единицу",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T1priceCB2 = forms.BooleanField(required=False)
     T2price2 = forms.FloatField(required=False, min_value=0, label="Т1, Цена за 1 единицу",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T2priceCB2 = forms.BooleanField(required=False)
     T1Porog = forms.FloatField(required=False, min_value=0, label="T1, 1 порог",
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                               widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T2Porog = forms.FloatField(required=False, min_value=0, label="T2, 1 порог",
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                               widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T1Porog1 = forms.FloatField(required=False, min_value=0, label="T1, 2 порог",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     T2Porog1 = forms.FloatField(required=False, min_value=0, label="T2, 2 порог",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     ObshPorog = forms.FloatField(required=False, min_value=0, label="Общий порог",
-                                 widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                 widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     ObshPorog1 = forms.FloatField(required=False, min_value=0, label="Общий порог 2",
-                                  widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number','step':'any'}))
+                                  widget=forms.TextInput(attrs={'min':'0.01','class': 'form-control', 'type': 'number','step':'any'}))
     datStart = forms.DateField(widget = forms.TextInput(attrs={'class': 'form-control'}))
     datEnd = forms.DateField(widget = forms.TextInput(attrs={'class': 'form-control'}))
 
@@ -113,7 +113,7 @@ def tarpdf(request):
 def tarif_page(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
-    tarif_list=Tariffs.objects.filter(user=request.user)
+    tarif_list=Tariffs.objects.filter(user=request.user).order_by('-enable')
     for t in tarif_list:
         t.dat()
 
@@ -133,10 +133,10 @@ def addpaid(request):
     if request.method == 'POST':
         id = request.POST.get('idpaid')
         next = request.POST.get('next')
-        data = request.POST.get('datapaid')
+
         ut = Utilities.objects.get(id = id)
         ut.paid = True
-        ut.paid_date = data
+        ut.paid_date = now()
         ut.save()
         print(next)
     return HttpResponseRedirect(next)
@@ -763,7 +763,8 @@ def sumFormula(t,util):
 
     if dat :
         util.dateFirst = dat.first().dateAdd
-
+    else:
+        util.dateFirst=''
 
 
 
@@ -856,7 +857,7 @@ def contribution(request,year,month):
         return HttpResponseRedirect('/contribution/'+str(timezone.now().month)+'-'+str(timezone.now().year)+'/')
     tar = []
 
-    for t in  Tariffs.objects.filter(user=request.user):
+    for t in  Tariffs.objects.filter(user=request.user, enable=True):
         t.dat()
         t.apart = []
         tar.append(t)

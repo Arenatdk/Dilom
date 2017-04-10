@@ -94,8 +94,8 @@ def UserTariff(request,year,month):
     if (year=='0000' and month == '00'):
         return HttpResponseRedirect('/UserTariff/'+str(timezone.now().month)+'-'+str(timezone.now().year)+'/')
     tar = []
-
-    for t in  Tariffs.objects.filter(residents__userprofile__user=request.user):
+    apart = Apartment.objects.get(userprofile__user = request.user)
+    for t in  Tariffs.objects.filter(residents__userprofile__user=request.user,enable=True):
 
         t.dat()
         t.apart = []
@@ -108,4 +108,4 @@ def UserTariff(request,year,month):
                 ap.ut.append(util)
             t.apart.append(ap)
 
-    return render(request, "UserTariff.html",{'month':month,'year':year,'tar':tar})
+    return render(request, "UserTariff.html",{'month':month,'year':year,'tar':tar,'apart':apart.id})

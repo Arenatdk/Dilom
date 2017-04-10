@@ -296,17 +296,7 @@
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input id="idpaid" name="idpaid"  type="hidden" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="datapaid">Дата</label>
-                            <div class="input-group date">
 
-                                <input id="datapaid" name="datapaid" required type="text" class="form-control">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-th"></span>
-                                </div>
-                            </div>
-
-                        </div>
 
 
                     </div>
@@ -373,8 +363,8 @@
 
             }
 
-            if (T1&&T2)
-                f.submit();
+        if (T1&&T2)
+            f.submit();
         }
 
 
@@ -397,8 +387,8 @@
             $('#tarID').val(tarID);
             $('#tarType').val(tarType);
             $("#prc").prop('required',false);
-            $("#prc1").prop('required',false);
-            $("#psum").prop('required',false);
+                $("#prc1").prop('required',false);
+                $("#psum").prop('required',false);
 
             $('#tarifName').text('Тариф: ' + tarName);
             $('#appNumber').text('Номер дома: ' + apName);

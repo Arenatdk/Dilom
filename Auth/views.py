@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 # Create your views here.
 def login(request):
     if request.user.is_authenticated():
+        if request.user.userprofile is None:
+            return HttpResponseRedirect('/UserPanel/')
         if request.user.userprofile.isOSMD:
             return HttpResponseRedirect('/account/')
         else:

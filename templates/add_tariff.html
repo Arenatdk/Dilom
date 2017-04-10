@@ -17,7 +17,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal  " action="/tariff_add/" method="post">
+        <form class="form-horizontal  " action="/tariff_add/" onsubmit="fsubmit(this);return false;" method="post">
             {% csrf_token %}
 
             <div class="box-body">
@@ -345,7 +345,7 @@
 
 
 
-            <div class="form-group">
+            <div class="form-group" id="datStr">
                 <label for="datStart" class="col-sm-2 control-label">Дата начала</label>
 
                 <div class="col-sm-4">
@@ -358,7 +358,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="datEnd">
                 <label for="datEnd" class="col-sm-2 control-label">Дата окончания</label>
 
                 <div class="col-sm-4">
@@ -423,6 +423,19 @@
     </div>
     <script src="{% static 'dist/js/jquery-3.1.1.min.js' %}"></script>
     <script>
+        function fsubmit(t) {
+            $('#cenaZaedinicu').removeClass('has-error');
+            $('#datStr').removeClass('has-error');
+
+            datestart = new Date( $("#id_datStart").val().replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3") );
+            dateend = new Date( $("#id_datEnd").val().replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3") );
+            if (dateend<=datestart)
+                $('#datStr').addClass('has-error');
+            else
+            t.submit();
+        }
+
+
 
         function filter() {
 

@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'^UserTariff/(?P<month>[0-9]*)-(?P<year>[0-9]{4})/$', UserTariff, name='UserTariff'),
     url(r'^NewsUser/$', NewsUser, name='NewsUser'),
     url(r'^Settings/$', Settings, name='Settings'),
+    url(r'^Settingsuser/$', Settingsuser, name='Settingsuser'),
+    url(r'^getreportforuser/(?P<pk>\d+)/$', getreportforuser, name='getreportforuser'),
 
 
 
@@ -60,6 +62,7 @@ urlpatterns = [
 
     #apartament
     url(r'^apartment/$', apartments, name='apartment'),
+    url(r'^invitation/(?P<apid>\d+)/$', invitation, name='invitation'),
     url(r'^AddPodezd/$', AddPodezdPOST, name='AddPodezdPOST'),
     url(r'^AddLevel/$', AddLevelPOST, name='AddLevelPOST'),
     url(r'^enableTarif/$', enableTarif, name='enableTarif'),

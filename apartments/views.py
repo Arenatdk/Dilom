@@ -34,6 +34,28 @@ def apartments(request):
 
     return render(request, "apartments.html", {'PodezdForm':PodezdForm, 'LevelForm':LevelForm, 'PodezdList':PodezdList,'podezd':podezd,'levelList':levelList,'ApartmentList':ApartmentList})
 
+
+import csv
+from django.http import HttpResponse
+
+def invitation(request,apid):
+    if Podezd.objects.get(id=apid).user == request.user:
+
+        ap = Apartment.objects.filter(level__podezd=apid).order_by('level','numeber')
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Invitations'+str(apid)+'.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Подъезд № '+Podezd.objects.get(id=apid).numder])
+        writer.writerow(['Этаж','Квартира','Приглашение'])
+        for a in ap:
+                writer.writerow([a.level.level_number, a.numeber, a.uid])
+
+        return response
+    else:
+        return HttpResponseRedirect('/')
+
 def AddPodezdPOST(request):
     if request.method == 'POST':
         #if request.POST.get('AddPodezd') is not None:
@@ -130,10 +152,10 @@ def DialogAddApartment(request):
 
 class editApartInfo(forms.Form):
     Apartment = forms.IntegerField(label='Apartment PK', widget = forms.HiddenInput())
-    countRes = forms.IntegerField(label='Количество проживающих', widget=forms.TextInput(attrs={'class': 'form-control','type':'number'}))
-    countRooms = forms.IntegerField(label='Количество комнат', widget=forms.TextInput(attrs={'class': 'form-control','type':'number'}))
-    area = forms.IntegerField(label='Общая площадь', widget=forms.TextInput(attrs={'class': 'form-control','type':'number'}))
-    HotArea = forms.IntegerField(label='Отопительная площадь', widget=forms.TextInput(attrs={'class': 'form-control','type':'number'}))
+    countRes = forms.IntegerField(label='Количество проживающих', widget=forms.TextInput(attrs={'min':'0','class': 'form-control','type':'number'}))
+    countRooms = forms.IntegerField(label='Количество комнат', widget=forms.TextInput(attrs={'min':'0','class': 'form-control','type':'number'}))
+    area = forms.IntegerField(label='Общая площадь', widget=forms.TextInput(attrs={'min':'0','class': 'form-control','type':'number'}))
+    HotArea = forms.IntegerField(label='Отопительная площадь', widget=forms.TextInput(attrs={'min':'0','class': 'form-control','type':'number'}))
     isRent = forms.BooleanField(required=False)
 
 
@@ -174,7 +196,7 @@ def editApartament(request, pk):
     if UserProfile.objects.filter(id = a.userprofile_id).exists():
         owner = UserProfile.objects.get(id = a.userprofile_id)
     CurTarrif = Tariffs.objects.filter(residents=pk)
-    tariff= Tariffs.objects.filter(user=request.user)
+    tariff= Tariffs.objects.filter(user=request.user,enable=True)
     subs = subsidyi.objects.all()
 
     util= Utilities.objects.filter( apartment_id = pk ).order_by('-dateAdd','paid')
